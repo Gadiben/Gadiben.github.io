@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="GadibenOnline.css" type="text/css"></link>
+  <meta charset="utf-8">
+  <title>Assignement 3</title>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <header>
+    <h1>Assignement 3: GadibenOnline Rises</h1>
+    <p class="byline">By Gautier Dervaux</p>
+  </header>
+  <nav>
+  </nav>
+  <aside>
+    <nav id="categories">
+      <div> Categories&#9786; </div>
+      <li id="show_all">All</li>
+      <li id="forms">Forms</li>
+      <li id="videos">Videos</li>
+      <li id="map_filter">Map</li>
+    </nav>
+  </aside>
+  <article>
+    <section>
+      <div class="post form" id="form_post">
+        <h3>Gadiben wants to know who you are!</h3>
+        <form>
+          First name:
+          <input type="text" name="firstname">
+           Last name:
+          <input type="text" name="lastname"><br>
+          Email:
+          <input type="text" name="Email address">
+           Phone Number:
+          <input type="number" name="Phone number"><br>
+          <input id="submit_name" type="button" value="Enroll">
+        </form>
+      </div>
+      <div class="post map" id="map_post">
+        <h3>Gadiben knows where you are!</h3>
+        <div id="map" style = "width:80%;height:400px;"></div>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBo2FMqE5TM9exbiP9hnP3eUVEaaGWuqE0&callback=initMap">
+        </script>
+        <form>
+          Street number:
+          <input type="number" id="Street Number" value=1>
+          Street:
+          <input type="text" id="Street">
+          City:
+          <input type="text" id="City"><br>
+          Zip code:
+          <input type="number" id="Zip code">
+          Country:
+          <input type="text" id="Country"><br>
+          <input id="submit" type="button" value="Search address">
+        </form>
+      </div>
+      <div class="post video">
+        <h3>Gadiben's favourite video </h3>
+        <div id="Post_video">
+            <video id="video_post" autoplay loop controls muted>
+            <source id="video_source" src="https://upload.wikimedia.org/wikipedia/commons/d/d6/Elaphants_Dream.ogv" type="video/ogg">
+            Your browser does not support HTML5 video.
+          </video>
+          <canvas id="canvasPreview" ></canvas>
+          <canvas id="canvasMirror"  ></canvas>
+        <form>
+            Enter URL to change the playing video:<br>
+            <input type="text" id="Video_URL_to_load" value=https://upload.wikimedia.org/wikipedia/commons/d/d6/Elaphants_Dream.ogv> <br>
+            <input id="change_video" type="button" value="Change Video">
+        </form>
+        <form>
+            Enter the time for the video to play from:<br>
+            <input type="number" id="time_to_jump" value=0>
+            <input id="jump_time" type="button" value="Jump to time">
+        </form>
+        <form>
+            <input id="play_review" type="button" value="Extract Preview"><br>
+            <input id="rotate_button_left" type="button" value="Rotate Video Left!!">
+            <input id="rotate_button_right" type="button" value="Rotate Video Right!!"><br>
+            <input id="reset_rotation" type="button" value="Make the video straight again">
+        </form>
+        <form>
+          <input id="toggle_controls" type="checkbox" checked> Toggle controls on video
+        </form>
+        <form>
+          <input id="toggle_mirror" type="checkbox">CLick to toggle mirror
+        </form>
+        <h4>Enjoy this bubble video of <br>EPIC ROBOT DANCING!</h4>
+        <div id="Robot_Container" class="video_container","robot_dance">
+          <video id="video_post_Bubble" autoplay loop controls muted currentTime=6>
+          <source id="video_source_buble" src="https://upload.wikimedia.org/wikipedia/commons/8/8c/ASIMO_-_Dancing.webm" type="video/webm">
+          </video>
+        </div>
+        <form>
+          <input id="dance_robot_button" class="robot_dance" type="button" value="SPIN!">
+          <br>SPIN THE ROBOT!<br>(Hold to spin...)
+        </form>
+      </div>
+    </div>
+      <div class = "post video">
+        <div  class="video_container" src="">
+          <h3>Gadiben's TOP 10 video!</h3>
+          <div id="jukebox_container">
+            <video id="JukeBox_vid" muted autoplay controls>
+            <source id="jukebox_src" src="">
+            </video>
+          </div>
+        </div>
+        <p id="Number_of_video_playing">Playing video</p>
+        <form>
+        <input id="init_jukebox" type="button" value="Launch EPIC Gadiben's JukeBox!!">
+        </form>
+        <p id="Every_robot_spin"> Does the robot down there spin as well ??! Try and make him spin!</p>
+      </div>
+    </section>
+  </article>
+ <aside>
+    <h2>Right side </h2>
+    <button>Go to fan base</button>
+  </aside>
+  <footer>
+    © Gautier Dervaux - 2018 Eurecom
+  </footer>
+</body>
+<script src="GadibenOnline.js"></script>
+</html>
