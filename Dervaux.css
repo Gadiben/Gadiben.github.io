@@ -36,8 +36,14 @@ h5{
   grid-row-start: span 2;
 }
 .vertical-three{
-  grid-row-start: span 5;
+  grid-row-start: span 8;
 }
+.right{
+  display: grid;
+  grid-template-rows: 2.5fr 1fr 1fr;
+  height: 100%;
+}
+
 .subcell {
   grid-column-start:  1;
   grid-column-end:  3;
@@ -63,11 +69,11 @@ li.item{
   margin-left: 10px;
   margin-right: 10px;
 }
-.right{
+.right, header{
   background-color: #7fb5e8;
   color: white;
-  display: inline;
 }
+
 .right .right-title{
   margin: 1em;
   margin-bottom: 0;
