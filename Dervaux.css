@@ -61,7 +61,7 @@ h5{
   grid-template-rows: 5fr 2fr;
 }
 .right.second{
-  grid-template-rows: 0.3fr 5fr 5fr 3.25fr;
+  grid-template-rows: 0.5fr 5fr 3.5fr 2.7fr;
 }
 .subcell {
   grid-column-start:  1;
