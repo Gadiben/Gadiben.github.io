@@ -8,19 +8,20 @@ main{
   grid-template-rows: 50% 50%;
   grid-template-columns: 1fr;
   font-family: Tahoma;
-  font-size: 10pt;
+  font-size: 9pt;
   overflow: hidden;
+}
+.page{
+  grid-template-columns:1fr 5fr 2fr;
+  display: grid;
 }
 .first-page{
   height: 100%;
-  grid-template-columns:1fr 4fr 2fr;
   grid-template-rows: 1.5fr 0.5fr 1fr 0.5fr 4fr;
-  display: grid;
 }
 .second-page{
   height: 100%;
-  grid-template-columns:1fr 4fr 2fr;
-  grid-template-rows:0.5fr 1fr 9fr 3fr ;
+  grid-template-rows:0.5fr 1fr 6fr 1fr 2fr 3fr;
   display: grid;
 }
 ul {
@@ -31,31 +32,34 @@ h1{
   font-size: 15pt;
 }
 h2{
-  font-size: 13pt;
-}
-h3{
   font-size: 12pt;
 }
-h4{
+h3{
   font-size: 11pt;
+}
+h4{
+  font-size: 10pt;
   margin: auto;
 }
 h5{
   margin: auto;
-  font-size: 10pt;
+  font-size: 9pt;
 }
 .vertical-two{
   grid-row-start: span 2;
 }
 .vertical-five{
-  grid-row-start: span 5;
+  grid-row-start: span 6;
 }
 .vertical-four{
-  grid-row-start: span 4;
+  grid-row-start: span 6;
 }
 .right{
   display: grid;
   height: 100%;
+}
+.right > *{
+  padding: 0 5px;
 }
 .right.first{
   grid-template-rows: 5fr 2fr;
@@ -73,11 +77,11 @@ ul{
 }
 .subcell ul{
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 1fr 5fr;
   height: 100%;
 }
-.subcell.formation{
-  grid-row-start: span 2;
+.subcell{
+  grid-column-start: span 2;
 }
 li.item{
   padding-top: 4px;
@@ -86,7 +90,7 @@ li.item{
 }
 .right, header{
   background-color: #7fb5e8;
-  color: white;
+  color: black;
 }
 .right .right-title{
   margin: 1em;
@@ -114,6 +118,7 @@ header{
   position:relative;
 }
 .header-title{
+  color: white;
   text-shadow: black 1px 1px 1px;
 }
 .header-content{
@@ -186,6 +191,9 @@ li.left{
   right: 3%;
   width: 8em;
 }
+.item p{
+  margin: 10px 20px;
+}
 #wordcloud-container{
   margin: auto;
   margin-top: 15px;
@@ -213,7 +221,7 @@ li.left{
 }
 .skills{
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 1.5fr;
 }
 .progLanguage{
   display: grid;
@@ -242,7 +250,7 @@ li.left{
 }
 
 .languages-grid{
-  font-size: 12pt;
+  font-size: 10pt;
   margin: 15px 2px;
   display: grid;
   grid-template-columns: repeat(2,auto);
@@ -259,14 +267,13 @@ li.left{
   font-weight: bold;
   justify-self: end;
   border-right: 1px solid #3578b7;
-  text-shadow: black 1px 1px 1px;
 }
 .tools{
-  margin: 20px 10px;
+  margin: 10px 0;
   display: grid;
   grid-template-columns: auto auto;
   grid-gap: 20px 10px;
-  font-size: 12pt;
+  font-size: 10pt;
 }
 .tools li{
   justify-self: start;
@@ -277,7 +284,7 @@ li.left{
 }
 .certification {
   display: grid;
-  margin: 20px;
+  margin: 20px 0;
   grid-gap: 20px;
 }
 .certification li{
@@ -305,6 +312,7 @@ li.left{
   margin: 10px;
 }
 #contact{
+  color: white;
   background-color: #3578b7;
 }
 #contact .right-title{
