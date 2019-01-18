@@ -2,19 +2,31 @@ body{
   margin: 0;
 }
 main{
-  border: 1px solid black;
   width: 21.59cm;
+  height: 55.88cm;
   display: grid;
-  grid-template-rows: 1fr 0.2fr 0.5fr 0.2fr 1fr 1fr 0.1fr 1.3fr 1fr;
-  grid-template-columns:1fr 4fr 2fr;
+  grid-template-rows: 50% 50%;
+  grid-template-columns: 1fr;
   font-family: Tahoma;
   font-size: 10pt;
+  overflow: hidden;
+}
+.first-page{
+  height: 100%;
+  grid-template-columns:1fr 4fr 2fr;
+  grid-template-rows: 1.5fr 0.5fr 1fr 0.5fr 4fr;
+  display: grid;
+}
+.second-page{
+  height: 100%;
+  grid-template-columns:1fr 4fr 2fr;
+  grid-template-rows:0.5fr 1fr 9fr 3fr ;
+  display: grid;
 }
 ul {
   list-style: none;
   text-align: justify;
 }
-
 h1{
   font-size: 15pt;
 }
@@ -35,15 +47,22 @@ h5{
 .vertical-two{
   grid-row-start: span 2;
 }
-.vertical-three{
-  grid-row-start: span 8;
+.vertical-five{
+  grid-row-start: span 5;
+}
+.vertical-four{
+  grid-row-start: span 4;
 }
 .right{
   display: grid;
-  grid-template-rows: 2.5fr 1fr 1fr;
   height: 100%;
 }
-
+.right.first{
+  grid-template-rows: 5fr 2fr;
+}
+.right.second{
+  grid-template-rows: 0.3fr 5fr 5fr 3.25fr;
+}
 .subcell {
   grid-column-start:  1;
   grid-column-end:  3;
@@ -59,10 +78,6 @@ ul{
 }
 .subcell.formation{
   grid-row-start: span 2;
-  grid-template-rows: auto  auto auto  auto  auto  auto;
-}
-.subcell.projets{
-  grid-template-rows: auto  auto  auto;
 }
 li.item{
   padding-top: 4px;
@@ -73,7 +88,6 @@ li.item{
   background-color: #7fb5e8;
   color: white;
 }
-
 .right .right-title{
   margin: 1em;
   margin-bottom: 0;
@@ -93,7 +107,6 @@ li.item{
   margin: 0;
   vertical-align: middle;
 }
-
 header{
   border: none;
   grid-column-start: span 3;
@@ -126,6 +139,9 @@ header .trait {
 .cell h2{
   margin: 1em;
 }
+.cell{
+  text-align: justify;
+}
 .left{
   background-color: #e8ecf2;
 }
@@ -143,7 +159,7 @@ header .trait {
 .vertical-two .icon-background{
   margin-top: 0;
 }
-.left,.middle {
+.left, .middle {
   position: relative;
 }
 .left i{
@@ -162,6 +178,7 @@ li.left{
 }
 .item{
   position: relative;
+  padding: 0 15px 0 5px;
 }
 .item img{
   position: absolute;
@@ -174,17 +191,17 @@ li.left{
   margin-top: 15px;
   background-color: white;
   border-radius: 50%;
-  width: 13em;
-  height: 13em;
+  width: 15em;
+  height: 14em;
   overflow: hidden;
-  box-shadow: inset 0 0 25px  #7fb5e8;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 25px #7fb5e8;
 }
 #wordCloud{
   width: 23em;
   margin: auto;
-  transform: translate(-22%,-12%);
+  transform: translate(-15%,-12%);
 }
-
 #logo-INRIA{
   position: absolute;
   top: 40%;
@@ -194,6 +211,90 @@ li.left{
 .middle{
   border-bottom: 3px solid #e8ecf2;
 }
+.skills{
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+.progLanguage{
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin: 15px 15px;
+  grid-gap: 0 5px;
+}
+.progLanguage li{
+  align-self: center;
+}
+.progLanguage li div i{
+  margin: 0 2px;
+}
+.bar{
+  border-radius: 50px;
+  background-color: white;
+  height: 100%;
+}
+
+.container{
+  padding: 2px;
+  border-radius: 50px;
+  height: 10px;
+  background-color: #3578b7;
+  width: 100%;
+}
+
+.languages-grid{
+  font-size: 12pt;
+  margin: 15px 2px;
+  display: grid;
+  grid-template-columns: repeat(2,auto);
+  grid-template-rows: repeat(5,auto);
+  grid-gap:0px 6px;
+}
+.languages-grid li{
+  align-self: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.langue{
+  padding-right: 6px;
+  font-weight: bold;
+  justify-self: end;
+  border-right: 1px solid #3578b7;
+  text-shadow: black 1px 1px 1px;
+}
+.tools{
+  margin: 20px 10px;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 20px 10px;
+  font-size: 12pt;
+}
+.tools li{
+  justify-self: start;
+}
+.tools .category{
+  align-self: center;
+  justify-self: end;
+}
+.certification {
+  display: grid;
+  margin: 20px;
+  grid-gap: 20px;
+}
+.certification li{
+  text-align: center;
+}
+.hobbies{
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 10px 5px;
+  margin: 20px 10px;
+}
+.hobbies li.logo{
+  font-size: 17pt;
+  justify-self: center;
+}
+
+
 #contact ul, .intro ul{
   text-align: center;
   text-decoration: none;
@@ -201,14 +302,14 @@ li.left{
 }
 #contact ul li, .intro ul li{
   display: inline-block;
-  margin: 5px;
+  margin: 10px;
 }
-
 #contact{
   background-color: #3578b7;
 }
 #contact .right-title{
   margin-top: 30px;
+  margin-bottom: 10px;
   text-align: center;
 }
 #contact #email{
