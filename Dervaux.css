@@ -346,6 +346,7 @@ display: inline;
   text-align: center;
   text-decoration: none;
   padding: 0;
+  text-shadow: 1px 1px black;
 }
 #contact ul li{
   display: inline-block;
