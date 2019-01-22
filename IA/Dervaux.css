@@ -22,7 +22,7 @@ main{
 }
 .second-page{
   height: 100%;
-  grid-template-rows:0.2fr .6fr 5fr .6fr 3fr 2.5fr;
+  grid-template-rows:0.2fr .6fr 4fr .6fr 5fr 2.5fr;
   display: grid;
 }
 ul {
@@ -209,7 +209,7 @@ li.left{
   right: 3%;
   width: 8em;
 }
-.item ul{
+.item > ul{
   margin: 10px 0 0 20px;
   list-style: circle;
 }
