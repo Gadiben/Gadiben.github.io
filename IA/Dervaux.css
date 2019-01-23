@@ -308,7 +308,7 @@ li.left{
 }
 .tools .category{
   align-self: center;
-  justify-self: end;
+  justify-self: start;
 }
 .certification {
   display: grid;
