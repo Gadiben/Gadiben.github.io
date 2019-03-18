@@ -1,6 +1,6 @@
 
 //on récupère le fichier csv qui contient les tweets
-d3.dsv("|","./data/QuebecMedia.csv").then(function(data) {
+d3.dsv("|","https://gadiben.github.io/Dataviz/data/QuebecMedia.csv").then(function(data) {
   //todo : on récupère le fichier csv qui contient les associa nom du media, compte_twitter du media, type de media, pays
   //on formate le fichier sources
   var sources = createSources(data);
