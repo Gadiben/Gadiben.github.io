@@ -1,11 +1,7 @@
 /***** General style *****/
 body {
-  margin: 20px auto auto;
+  margin: 0px auto auto;
   font-family: Arial, sans-serif;
-}
-
-path {
-  /*fill: black !important;*/
 }
 
 .d3-tip {
@@ -16,4 +12,32 @@ path {
   border-radius: 2px;
   color: #fff;
   background: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+}
+
+#mediaBubbleChart circle {
+  opacity: 0.6 !important;
+}
+#mediaBubbleChart circle:hover {
+  cursor: pointer;
+  opacity: 1 !important;
+}
+
+.hoverMedia {
+  opacity: 1 !important;
+}
+.notHoverMedia {
+  opacity: 0.3 !important;
+}
+
+#tweetBubbleChart circle {
+  fill: rgba(250,250,250,1);
+  stroke : rgba(240,240,240,1);
+}
+
+#tweetBubbleChart g:hover circle {
+  fill: rgba(100,100,100,1);
+  stroke: rgba(70,70,70,1);
+  stroke-width: 1px;
+  opacity: 1;
 }
