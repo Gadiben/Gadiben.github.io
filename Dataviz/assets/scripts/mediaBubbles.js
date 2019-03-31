@@ -1,13 +1,18 @@
 "use strict";
-
+/*
 function mediaSizeScaleDomain(x,source){
   // TODO: Change size in respect with popularity
   x.domain([d3.min(source,(d) => +d.number_tweets_and_RT),d3.max(source,(d) => +d.number_tweets_and_RT)]);
 }
+*/
 
 function domainMediaXPosition(x,source){
-  x.domain([d3.min(source,(d) => +d.mean_sentiment),d3.max(source,(d) => +d.mean_sentiment)]);
+  var maxAbsSentiment = d3.max(source, d => Math.abs(+d.mean_sentiment));
+  x.domain([-maxAbsSentiment, maxAbsSentiment]);
 }
+
+
+
 /**
  * Crée les axes horizontaux du graphique à bulles des médias.
  *
@@ -18,23 +23,96 @@ function domainMediaXPosition(x,source){
  */
 function createMediaBubblesXAxis(g, xAxisMetadata) {
   // Dessiner l'axe des abscisses du graphique.
-  var xAxisLine = g.selectAll("line")
+  var xAxisLine = g.selectAll("g")
     .data(xAxisMetadata)
     .enter()
-    .append("line")
+    .append("g");
 
-  xAxisLine.attr("x1", xMediasPositions.min - axisMarginX)
+
+  xAxisLine.append("line")
+    .attr("x1", xMediasPositions.min - axisMarginX)
     .attr("x2", xMediasPositions.max + axisMarginX)
     .attr("y1", d => getMediaYPosition(d.country, d.category))
     .attr("y2", d => getMediaYPosition(d.country, d.category))
     .attr("stroke", "grey")
     //.attr("stroke-width", "1px")
-    .attr("opacity", 0.5)
+    .attr("opacity", 0.5);
+
+    xAxisLine.append("text")
+    .text(d=>d.country)
+    .attr("text-anchor", "middle")
+    .attr("x", 30)
+    .attr("y", d => getMediaYPosition(d.country, d.category)-10)
+    .attr("fill", "black")
+    .attr("class", "textCountry")
+    .attr("opacity",0);
+
+    xAxisLine.append("text")
+    .text(d=>d.category)
+    .attr("text-anchor", "middle")
+    .attr("x", 30)
+    .attr("y", d => getMediaYPosition(d.country, d.category)+25)
+    .attr("fill", "black")
+    .attr("class", "textCategory")
+    .attr("opacity",0);
+
 }
 
 function createMediaBubblesYAxis(g, xMedias) {
+  var longueurArrow = 40;
   // Dessiner les axes verticaux du graphique.
   var verticalAxisBoundValues = {min: xMedias.invert(xMediasPositions.min - axisMarginX), max: xMedias.invert(xMediasPositions.max + axisMarginX)};
+  var axisTitle = g.append("text")
+  .text("sentiment")
+  .attr("text-anchor", "middle")
+  .attr("x", xMedias(0))
+  .attr("y", yMediasPosition - axisMarginY - 20)
+  .attr("fill", "black");
+  var legendAxis = g.append("g");
+  g.append("svg:defs").append("svg:marker")
+      .attr("id", "triangle")
+      .attr("refX", 6)
+      .attr("refY", 6)
+      .attr("markerWidth", 30)
+      .attr("markerHeight", 30)
+      .attr("orient", "auto")
+      .append("path")
+      .attr("d", "M 0 0 12 6 0 12 3 6")
+      .style("fill", "black");
+
+  legendAxis.append("line")
+    .attr("class", "legend_arrow")
+    .attr("x1", xMedias(0)-30)
+    .attr("y1",yMediasPosition - axisMarginY - 20)
+    .attr("x2", xMedias(0)-30-longueurArrow)
+    .attr("y2", yMediasPosition - axisMarginY - 20)
+    .attr("stroke-width", 1)
+    .attr("stroke", "black")
+    .attr("marker-end", "url(#triangle)");
+    legendAxis.append("text")
+    .text("-")
+    .attr("text-anchor", "middle")
+    .attr("x", xMedias(0)-30-longueurArrow/2)
+    .attr("y", yMediasPosition - axisMarginY - 20)
+    .attr("fill", "black")
+
+  legendAxis.append("line")
+  .attr("class", "legend_arrow")
+  .attr("x1", xMedias(0)+30)
+  .attr("y1", yMediasPosition - axisMarginY - 20)
+  .attr("x2", xMedias(0)+30+longueurArrow)
+  .attr("y2", yMediasPosition - axisMarginY - 20)
+  .attr("stroke-width", 1)
+  .attr("stroke", "black")
+  .attr("marker-end", "url(#triangle)");
+  legendAxis.append("text")
+  .text("+")
+  .attr("text-anchor", "middle")
+  .attr("x", xMedias(0)+30+longueurArrow/2)
+  .attr("y", yMediasPosition - axisMarginY - 20)
+  .attr("fill", "black")
+
+
 
   for (let i=-10 ; i<=10 ; i++) {
     let sentimentValue = i/10;
@@ -59,6 +137,8 @@ function createMediaBubblesYAxis(g, xMedias) {
         .attr("y", yMediasPosition - axisMarginY - 5)
         .attr("fill", "grey")
 
+
+
       // Add invisible labels at bottom
       var sentimentLabelBottom = g.append("text")
         .text(sentimentValue)
@@ -71,7 +151,7 @@ function createMediaBubblesYAxis(g, xMedias) {
       //Change zero style
       if (i == 0) {
         verticalLine.attr("opacity", 1)
-        .style("stroke-dasharray", "4 4");
+          .style("stroke-dasharray", "4 4");
         sentimentLabelUp.attr("font-weight", "bold");
         sentimentLabelBottom.attr("font-weight", "bold");
       }
@@ -82,18 +162,35 @@ function createMediaBubblesYAxis(g, xMedias) {
 
 function updateMediaBubblesXAxis() {
   var g = d3.select("#mediaXAxis");
-  var lines = g.selectAll("line")
+  var lines = g.selectAll("line").filter(function() {
+      return !this.classList.contains('legend_arrow')
+    })
     .transition()
+    .ease(d3.easeCubic)
     .duration(transitionAxisDuration)
     .attr("y1", d => getMediaYPosition(d.country, d.category))
-    .attr("y2", d => getMediaYPosition(d.country, d.category))
+    .attr("y2", d => getMediaYPosition(d.country, d.category));
+
+  var textsCategory = g.selectAll("text.textCategory")
+      .transition()
+      .duration(transitionAxisDuration)
+      .attr("y", d => getMediaYPosition(d.country, d.category)+25)
+      .attr("opacity", d=> categoryChecked?1:0);
+  var textsCountry = g.selectAll("text.textCountry")
+      .transition()
+      .duration(transitionAxisDuration)
+      .attr("y", d => getMediaYPosition(d.country, d.category)-10)
+      .attr("opacity", d=> countryChecked?1:0);
+
   //France doesn't move
 }
 
 function updateMediaBubblesYAxis() {
   var g = d3.select("#mediaYAxis");
 
-  g.selectAll("line")
+  g.selectAll("line").filter(function() {
+      return !this.classList.contains('legend_arrow')
+    })
     .transition()
     .duration(transitionAxisDuration)
     .attr("y2", yMediasPosition + axisMarginY + interCategorySpace*(nbCategoriesDisplayed-1));
@@ -105,7 +202,20 @@ function updateMediaBubblesYAxis() {
     .attr("y", yMediasPosition + interCategorySpace*(nbCategoriesDisplayed-1) + axisMarginY + 17)
 }
 
-function updateMediaBubblesAxis() {
+function updateSvgSize(){
+  var svg = d3.select("#mediaSVG")
+  var height = yMediasPosition + interCategorySpace*(nbCategoriesDisplayed-1) + axisMarginY + tweetVerticalMargin;
+  if(tweetChartActive){
+    height += tweetHeight + tweetVerticalMargin + tweetVerticalMargin + tweetLegendHeight + tweetVerticalMargin;
+  }
+  svgBounds.height = height;
+  svg.transition()
+    .duration(transitionAxisDuration)
+    .attr("height", height);
+
+}
+
+function updateNbCategoriesDisplayed() {
   if (countryChecked && categoryChecked) {
     nbCategoriesDisplayed = 6;
   } else if (countryChecked) {
@@ -115,8 +225,13 @@ function updateMediaBubblesAxis() {
   } else {
     nbCategoriesDisplayed = 1;
   }
+}
+
+function updateMediaBubblesAxis() {
+  //updateNbCategoriesDisplayed();
   updateMediaBubblesXAxis();
   updateMediaBubblesYAxis();
+  updateSvgSize();
 }
 
 /**
@@ -128,6 +243,7 @@ function updateMediaBubblesAxis() {
  * @param tweetsGg       Le groupe dans lequel le graphique à bulles des tweets doit être dessiné.
  * @param tweetSources  les donneés : les tweets associiés à un média (issus du fichier csv non modifié)
  */
+
 function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXScale,formatNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData){
   var mediaTip = d3.tip()
     .attr('class', 'd3-tip')
@@ -140,9 +256,16 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   var borderColor = colorCategory();
   //console.log("createMediaBubbleChart");
   //console.log(mediaBubbleGroups);
+  g.append("text")
+  .text("Sentiment moyen des tweets par journal")
+  .attr("x",(svgBounds.width-largeur_legende)/2)
+  .attr("y", hauteur_legende)
+  .style("font-weight", "bold")
+  .attr("text-anchor", "middle");
   var mediaG = mediaBubbleGroups.enter().append("g"); //mediaG is the group over each media circle
   //pour chaque media on crée un cercle
   mediaG.append("circle")
+    .attr("id", d=>"media"+d.name.substring(1))
     .attr("r",function(d){
       if(d.name in mediasData){
         return scaleBubbleSizeMediaChart(+mediasData[d.name].Followers/+countries_population[d.Pays]);
@@ -166,8 +289,8 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   })
   .attr("stroke-width", 3)
   .datum(function(d){
-    d.x = initPosition.x+Math.random()*5;
-    d.y = initPosition.y+Math.random()*5;
+    d.x = initPosition.x+ +d.mean_sentiment*5000 + (Math.random()-0.5)*2*5;
+    d.y = initPosition.y+(Math.random()-0.5)*2*10;
     return d;
   })
   .attr("cx", d => d.x)
@@ -175,39 +298,89 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   .on("click", function(d){
     var mouseCoordinates= d3.mouse(this);
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
-    launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber)
-    //setUpTweetChart(tweetsG,tweetSources[d.name].tweets,initPosition,formatNumber)
+    tweetsG.attr("transform",""); //reset translation of tweet group
+
+    if(d3.select("#media"+d.name.substring(1)).classed("selectedMedia")){
+      d3.select("#media"+d.name.substring(1)).classed("selectedMedia", false);
+      tweetsG.selectAll("g").remove();
+      mediaG.selectAll("circle").classed("notSelectedMedia", false);
+      tweetChartActive = false;
+      updateSvgSize();
+      d3.select("#legendImage").transition().duration(500).attr("opacity",0);
+      tweetsG.select("#titreTweetChart").remove();
+    }
+    else{
+      //Change style
+      mediaG.selectAll("circle").classed("selectedMedia", false);
+      mediaG.selectAll("circle").classed("notSelectedMedia", true);
+      d3.select("#media"+d.name.substring(1)).classed("selectedMedia", true);
+      d3.select("#media"+d.name.substring(1)).classed("notSelectedMedia", false);
+      d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",true);
+
+      d3.select("body").style("cursor","progress");
+
+      launchTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].tweets,initPosition,formatNumber, d.fullName)
+
+      scrollToTweet();
+
+      tweetChartActive = true;
+      updateMediaBubblesAxis();
+      var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
+      var marginHeight = 2/100*heightSvg;
+      var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
+
+      let valueTransform = yMainImg-d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0];
+      var transformLegend = "translate(0,"+yMainImg+")";
+
+
+      d3.select("#legendImage").attr("transform", transformLegend);
+      d3.select("#legendImage").transition().duration(500).attr("opacity",1);
+    }
   })
-  .on('mouseover', mediaTip.show)
-  .on('mouseout', mediaTip.hide);
+  .on('mouseover', function(d){
+    d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",true);
+    d3.select(this).classed("notSelectedMedia",false);
+    d3.select(this).classed("notHoveredMedia",false);
+    mediaTip.show(d);
+  })
+  .on('mouseout', function(d){
+    d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",false);
+    if(tweetsG.selectAll("g")._groups[0].length !== 0){
+      d3.select(this).classed("notSelectedMedia",true);
+    };
+    mediaTip.hide(d);
+  })
 
   mediaBubbleGroups = mediaBubbleGroups.merge(mediaG);
 
   mediaBubbleGroups.call(mediaTip);
 
-  /*
-  var checkPays = d3.select("#filterCountry");
-  checkPays.on("click", function(d){
-    //console.log(this.checked);
-    splitCountry(this.checked, mediaBubbleGroups, mediaSources, scaleBubbleSizeMediaChart, mediaXScale, mediasData);
-  });
-  */
   runMediaSimulation(mediaSources, mediaBubbleGroups, scaleBubbleSizeMediaChart, mediaXScale, mediasData);
 }
 
 function updateFilterCheck() {
   countryChecked = d3.select("#filterCountry").property("checked");
   categoryChecked = d3.select("#filterCategory").property("checked");
+  updateNbCategoriesDisplayed();
 }
 
 function getMediaTipText(d, formatNumber){
   var tipText = "";
-  tipText += "[Insert real media name]<br>"
-  tipText += "<span><strong>" + d.name + "</strong></span><br>";
-  tipText += "<span>Sentiment moyen: <strong>" + formatNumber(d.mean_sentiment) + "</strong></span><br>";
+  tipText += "<span><strong>"+ d.fullName +"</strong> - <em>"+ d.name + "</em></span><br>";
+  tipText += "<span>Sentiment moyen: <strong style='color:"+d3.interpolateRdYlGn((d.mean_sentiment+0.5))+"'>" + formatNumber(d.mean_sentiment) + "</strong></span><br>";
   tipText += "<span>Nombre de tweet et retweet moyen: <strong>" + formatNumber(d.number_tweets_and_RT) + "</strong></span>";
   return tipText;
 
+}
+
+function scrollToTweet(){
+  d3.select("body").style("cursor","progress");
+  var nb_scroll = 1;
+  var distanceToScroll =  yMediasPosition + interCategorySpace* nbCategoriesDisplayed - window.pageYOffset;
+  var timer = setTimeout(function(){
+    d3.select("body").style("cursor","default");
+    window.scrollBy(0, distanceToScroll/nb_scroll);
+  },500);
 }
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
   // https://stackoverflow.com/questions/24933430/img-src-svg-changing-the-fill-color
