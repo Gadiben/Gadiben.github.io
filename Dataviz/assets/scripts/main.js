@@ -1,7 +1,7 @@
 //on récupère le fichier csv qui contient les tweets
-d3.dsv("|","https://gadiben.github.io/data/FranceMedia.csv").then(function(france_data) {
-  d3.dsv("|","https://gadiben.github.io/data/QuebecMedia.csv").then(function(quebec_data) {
-    d3.dsv(",", "https://gadiben.github.io/data/categories.csv").then(function(medias_data) {
+d3.dsv("|","https://gadiben.github.io/Dataviz/data/FranceMedia.csv").then(function(france_data) {
+  d3.dsv("|","https://gadiben.github.io/Dataviz/data/QuebecMedia.csv").then(function(quebec_data) {
+    d3.dsv(",", "https://gadiben.github.io/Dataviz/data/categories.csv").then(function(medias_data) {
 
       //Preprocessing
       var mediasData = formatMediasData(medias_data);
