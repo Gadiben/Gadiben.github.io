@@ -19,16 +19,21 @@ function attractionCenterX(d){
 }
 
 function attractionCenterY(){
-  return yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin +  tweetHeight;
+  return yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin + tweetLegendMargin + tweetHeight/2 ;
 }
 
 //fonction qui maintient les cercles de chaque tweet d'un même groupe ensemble
 function runTweetSimulation(source,bubbleGroups,xBubbleScale){
   tweetSimuDone = false;
+  var neutralRandomFactor = 2.5
   var simulationTweet = d3.forceSimulation()
-    .velocityDecay(0.2)
-    .force('x', d3.forceX().strength(forceStrengthTweet).x(attractionCenterX))
-    .force('y', d3.forceY().strength(forceStrengthTweet).y(attractionCenterY))
+    .velocityDecay(0.3)
+    .force('x', d3.forceX().strength(forceStrengthTweet).x(d => {
+      return attractionCenterX(d) + (Math.random()-0.5)*2 * svgBounds.width * 0.05 * ((d.sentiment == 0)*neutralRandomFactor + (d.sentiment != 0)*0.5) * (source.length > 500);
+    }))
+    .force('y', d3.forceY().strength(forceStrengthTweet).y(d => {
+        return attractionCenterY() + (Math.random()-0.5)*2 * svgBounds.width * 0.05 *((d.sentiment == 0)*neutralRandomFactor + (d.sentiment != 0)*0.5) * (source.length > 500);
+      }))
     .force('collide', d3.forceCollide(d => Math.sqrt(xBubbleScale(+d.retweet_count)) + collisionTweetMargin))
     .on('tick', d => tweetTicked(d,bubbleGroups,xBubbleScale,simulationTweet.alpha()));
   simulationTweet.nodes(source);
@@ -36,33 +41,35 @@ function runTweetSimulation(source,bubbleGroups,xBubbleScale){
 }
 
 function updateTweetChart(){
-  updateFilterCheck();
-
   d3.selectAll("#tweetBubbleChart g").style("cursor","default");
-  console.log(nbCategoriesDisplayed);
-  d3.select("#titreTweetChart").transition().duration(500).attr("y", yMediasPosition + interCategorySpace*nbCategoriesDisplayed+axisMarginY);
   d3.select("#tweetBubbleChart")
   .transition()
   .ease(d3.easeSin)
   .duration(transitionAxisDuration)
   .attr("transform", function(){
-    var translation = +attractionCenterY() - this.getBoundingClientRect().y + axisMarginY + tweetVerticalMargin;
-    var transform = d3.select(this).attr("transform");
-    if(transform){
-      var oldTranslate = transform.split(",")[1].split(")")[0];
-      translation += +oldTranslate;
-    }
+    //To use to translate bubbles and images
+    var translation = (nbCategoriesDisplayed-previousNbCategoriesDisplayed)*interCategorySpace
 
-    return "translate(0," + translation + ")";
+    //Legend Image
+    var legendImageBar = d3.select("#legendImage")
+    legendImageBar.transition()
+    .ease(d3.easeSin)
+    .duration(transitionAxisDuration)
+    .attr("transform", computeTranslateeTransform(legendImageBar,translation));
+
+    //transform bubble group
+    return computeTranslateeTransform(d3.select(this),translation);
   })
-  var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
-  var marginHeight = 2/100*heightSvg;
-  var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
-  //let valueTransform = yMainImg-d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0];
-  var transformLegend = "translate(0,"+yMainImg+")"; //yMainImg et pas valueTransform ??!!!!! Ca marche comme si translate prenait en fait la valeur finale en parametre et non de combien il doit translater...weird !!
-  d3.select("#legendImage").transition().duration(500).attr("transform", transformLegend);
+  updateSvgSize();
+}
 
-  //updateSvgSize();
+function computeTranslateeTransform(d3Node,translation){
+  var nodeTransform = d3Node.attr("transform");
+  if(nodeTransform){
+    var oldTranslate = nodeTransform.split(",")[1].split(")")[0];
+    translation += +oldTranslate;
+  }
+  return "translate(0," + translation + ")";
 }
 
 function tweetTicked(d,bubbleGroups,x,alpha) {

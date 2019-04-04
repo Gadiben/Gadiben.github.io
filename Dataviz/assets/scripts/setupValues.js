@@ -10,10 +10,10 @@ var svgBounds;
 const countries_population = {France: 67190000, Quebec: 8390000};
 
 //Bubble colors legend
-const countriesColors = {France: "#000", Quebec: "#ddd"};
+const countriesColors = {France: "#555", Quebec: "#ddd"};
 const categoriesColors = {Tele: "#9adb0f", Ecrit: "#1ad5f2", Radio: "#ed8210"};
-var hauteur_legende;
-var largeur_legende;
+const categoriesNames = {France: "France", Quebec: "Québec", Tele: "Télévisuelle", Ecrit: "Ecrite", Radio: "Radio"};
+
 // Percentage value must be setup, the other one is calculated at init
 
 // How many pixels of horizontal axis are beyond the range of bubbles ?
@@ -24,7 +24,7 @@ const axisMarginYPercentage = 10;
 var axisMarginY; //computed at init, px
 
 // Min and max of radius of media bubbles in % of svg width
-const mediaBubblesSizePercentage = {min:0.5, max: 10};
+const mediaBubblesSizePercentage = {min:0.7, max: 10};
 // Min and max in pixels of the radius of media bubbles
 var mediaBubblesSize; //Computed at init, {min: px, max: px}
 
@@ -32,7 +32,7 @@ var mediaBubblesSize; //Computed at init, {min: px, max: px}
 var xMediasPositions; //computed at init {min: px, max: px}
 
 //Margin over the media chart for title and legend
-const topMediaMarginY = 100; //px
+const topMediaMarginY = 130; //px
 // Y position (from the top of SVG) of the first media chart
 var yMediasPosition;
 
@@ -52,6 +52,7 @@ var countryChecked; //bool
 var categoryChecked; //bool
 // Global variable that contains the number of categories displayed
 var nbCategoriesDisplayed; //1, 2, 3 or 6
+var previousNbCategoriesDisplayed; //1, 2, 3 or 6
 
 // TWEETS BUBBLE CHART
 
@@ -59,6 +60,11 @@ var nbCategoriesDisplayed; //1, 2, 3 or 6
 const tweetBubblesSizePercentage = {min: 5, max: 300};
 // Min and Max values of tweets bubbles sizes
 var tweetBubblesSize;
+// Colors
+var middleColor = "#cccccc";
+var redColor = "#ad0000";
+var greenColor = "#00ad19";
+
 
 // Percentage of svg width between right svg border and left attractor center
 const leftPositionPercentageAttractionPoint = 20;
@@ -66,13 +72,13 @@ const leftPositionPercentageAttractionPoint = 20;
 var attractionPoints; //[[px, px], [px, px], [px, px]]
 var tweetsYPosition;
 // height tweets chart in px
-var tweetHeight = 300; //Calculated for each media // TODO
+var tweetHeight = 500; //Calculated for each media // TODO
 
 // Separation between media chart and tweet chart in px
-const tweetVerticalMargin = 20;
-
+const tweetVerticalMargin = 100;
+const tweetLegendMargin = 5;
 // Simulation setup values
-var forceStrengthTweet = 0.02;
+var forceStrengthTweet = 0.07;
 var tweetChartActive = false;
 var tweetSimuDone; //bool that says if tweets are displayed or not
 var fractionToShowTip = 0.5;

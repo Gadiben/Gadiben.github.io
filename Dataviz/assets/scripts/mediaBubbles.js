@@ -11,7 +11,59 @@ function domainMediaXPosition(x,source){
   x.domain([-maxAbsSentiment, maxAbsSentiment]);
 }
 
+function createSentimentArrow(g, xMedias) {
+  var longueurArrow = 40;
+  var axisTitle = g.append("text")
+    .text("sentiment")
+    .attr("text-anchor", "middle")
+    .attr("x", xMedias(0))
+    .attr("y", yMediasPosition - axisMarginY - 27)
+    .attr("fill", "grey")
+    .attr("font-size", "0.8em")
+  var legendAxis = g.append("g");
+  g.append("svg:defs").append("svg:marker")
+      .attr("id", "triangle")
+      .attr("refX", 6)
+      .attr("refY", 6)
+      .attr("markerWidth", 30)
+      .attr("markerHeight", 30)
+      .attr("orient", "auto")
+      .append("path")
+      .attr("d", "M 0 0 12 6 0 12 3 6")
+      .style("fill", "grey");
 
+  legendAxis.append("line")
+    .attr("class", "legend_arrow")
+    .attr("x1", xMedias(0)-30)
+    .attr("y1",yMediasPosition - axisMarginY - 30)
+    .attr("x2", xMedias(0)-30-longueurArrow)
+    .attr("y2", yMediasPosition - axisMarginY - 30)
+    .attr("stroke-width", 1)
+    .attr("stroke", "grey")
+    .attr("marker-end", "url(#triangle)");
+    legendAxis.append("text")
+    .text("-")
+    .attr("text-anchor", "middle")
+    .attr("x", xMedias(0)-30-longueurArrow/2)
+    .attr("y", yMediasPosition - axisMarginY - 30)
+    .attr("fill", "grey")
+
+  legendAxis.append("line")
+    .attr("class", "legend_arrow")
+    .attr("x1", xMedias(0)+30)
+    .attr("y1", yMediasPosition - axisMarginY - 30)
+    .attr("x2", xMedias(0)+30+longueurArrow)
+    .attr("y2", yMediasPosition - axisMarginY - 30)
+    .attr("stroke-width", 1)
+    .attr("stroke", "grey")
+    .attr("marker-end", "url(#triangle)");
+  legendAxis.append("text")
+    .text("+")
+    .attr("text-anchor", "middle")
+    .attr("x", xMedias(0)+30+longueurArrow/2)
+    .attr("y", yMediasPosition - axisMarginY - 30)
+    .attr("fill", "grey")
+}
 
 /**
  * Crée les axes horizontaux du graphique à bulles des médias.
@@ -35,84 +87,32 @@ function createMediaBubblesXAxis(g, xAxisMetadata) {
     .attr("y1", d => getMediaYPosition(d.country, d.category))
     .attr("y2", d => getMediaYPosition(d.country, d.category))
     .attr("stroke", "grey")
-    //.attr("stroke-width", "1px")
     .attr("opacity", 0.5);
 
     xAxisLine.append("text")
-    .text(d=>d.country)
+    .text(d => categoriesNames[d.country])
     .attr("text-anchor", "middle")
-    .attr("x", 30)
-    .attr("y", d => getMediaYPosition(d.country, d.category)-10)
+    .attr("x", 40)
     .attr("fill", "black")
     .attr("class", "textCountry")
-    .attr("opacity",0);
+    .attr("opacity",0)
+    .attr("font-size", "13px")
 
     xAxisLine.append("text")
-    .text(d=>d.category)
+    .text(d => categoriesNames[d.category])
     .attr("text-anchor", "middle")
-    .attr("x", 30)
-    .attr("y", d => getMediaYPosition(d.country, d.category)+25)
+    .attr("x", 40)
     .attr("fill", "black")
     .attr("class", "textCategory")
-    .attr("opacity",0);
+    .attr("opacity", 0)
+    .attr("font-size", "13px")
 
 }
 
 function createMediaBubblesYAxis(g, xMedias) {
-  var longueurArrow = 40;
+
   // Dessiner les axes verticaux du graphique.
   var verticalAxisBoundValues = {min: xMedias.invert(xMediasPositions.min - axisMarginX), max: xMedias.invert(xMediasPositions.max + axisMarginX)};
-  var axisTitle = g.append("text")
-  .text("sentiment")
-  .attr("text-anchor", "middle")
-  .attr("x", xMedias(0))
-  .attr("y", yMediasPosition - axisMarginY - 20)
-  .attr("fill", "black");
-  var legendAxis = g.append("g");
-  g.append("svg:defs").append("svg:marker")
-      .attr("id", "triangle")
-      .attr("refX", 6)
-      .attr("refY", 6)
-      .attr("markerWidth", 30)
-      .attr("markerHeight", 30)
-      .attr("orient", "auto")
-      .append("path")
-      .attr("d", "M 0 0 12 6 0 12 3 6")
-      .style("fill", "black");
-
-  legendAxis.append("line")
-    .attr("class", "legend_arrow")
-    .attr("x1", xMedias(0)-30)
-    .attr("y1",yMediasPosition - axisMarginY - 20)
-    .attr("x2", xMedias(0)-30-longueurArrow)
-    .attr("y2", yMediasPosition - axisMarginY - 20)
-    .attr("stroke-width", 1)
-    .attr("stroke", "black")
-    .attr("marker-end", "url(#triangle)");
-    legendAxis.append("text")
-    .text("-")
-    .attr("text-anchor", "middle")
-    .attr("x", xMedias(0)-30-longueurArrow/2)
-    .attr("y", yMediasPosition - axisMarginY - 20)
-    .attr("fill", "black")
-
-  legendAxis.append("line")
-  .attr("class", "legend_arrow")
-  .attr("x1", xMedias(0)+30)
-  .attr("y1", yMediasPosition - axisMarginY - 20)
-  .attr("x2", xMedias(0)+30+longueurArrow)
-  .attr("y2", yMediasPosition - axisMarginY - 20)
-  .attr("stroke-width", 1)
-  .attr("stroke", "black")
-  .attr("marker-end", "url(#triangle)");
-  legendAxis.append("text")
-  .text("+")
-  .attr("text-anchor", "middle")
-  .attr("x", xMedias(0)+30+longueurArrow/2)
-  .attr("y", yMediasPosition - axisMarginY - 20)
-  .attr("fill", "black")
-
-
 
   for (let i=-10 ; i<=10 ; i++) {
     let sentimentValue = i/10;
@@ -174,12 +174,12 @@ function updateMediaBubblesXAxis() {
   var textsCategory = g.selectAll("text.textCategory")
       .transition()
       .duration(transitionAxisDuration)
-      .attr("y", d => getMediaYPosition(d.country, d.category)+25)
+      .attr("y", d => getMediaYPosition(d.country, d.category)+15)
       .attr("opacity", d=> categoryChecked?1:0);
   var textsCountry = g.selectAll("text.textCountry")
       .transition()
       .duration(transitionAxisDuration)
-      .attr("y", d => getMediaYPosition(d.country, d.category)-10)
+      .attr("y", d => getMediaYPosition(d.country, d.category)-5)
       .attr("opacity", d=> countryChecked?1:0);
 
   //France doesn't move
@@ -206,7 +206,7 @@ function updateSvgSize(){
   var svg = d3.select("#mediaSVG")
   var height = yMediasPosition + interCategorySpace*(nbCategoriesDisplayed-1) + axisMarginY + tweetVerticalMargin;
   if(tweetChartActive){
-    height += tweetHeight + tweetVerticalMargin + tweetVerticalMargin + tweetLegendHeight + tweetVerticalMargin;
+    height += tweetHeight + tweetVerticalMargin + tweetLegendMargin*2;
   }
   svgBounds.height = height;
   svg.transition()
@@ -216,6 +216,7 @@ function updateSvgSize(){
 }
 
 function updateNbCategoriesDisplayed() {
+  previousNbCategoriesDisplayed = nbCategoriesDisplayed;
   if (countryChecked && categoryChecked) {
     nbCategoriesDisplayed = 6;
   } else if (countryChecked) {
@@ -254,14 +255,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   var mediaBubbleGroups = g.selectAll("g").data(mediaSources);
   var countryColor = colorCountry();
   var borderColor = colorCategory();
-  //console.log("createMediaBubbleChart");
-  //console.log(mediaBubbleGroups);
-  g.append("text")
-  .text("Sentiment moyen des tweets par journal")
-  .attr("x",(svgBounds.width-largeur_legende)/2)
-  .attr("y", hauteur_legende)
-  .style("font-weight", "bold")
-  .attr("text-anchor", "middle");
+
   var mediaG = mediaBubbleGroups.enter().append("g"); //mediaG is the group over each media circle
   //pour chaque media on crée un cercle
   mediaG.append("circle")
@@ -299,6 +293,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
     var mouseCoordinates= d3.mouse(this);
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
     tweetsG.attr("transform",""); //reset translation of tweet group
+    d3.select("#legendImage").attr("transform",""); //reset translation of image
 
     if(d3.select("#media"+d.name.substring(1)).classed("selectedMedia")){
       d3.select("#media"+d.name.substring(1)).classed("selectedMedia", false);
@@ -310,6 +305,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       tweetsG.select("#titreTweetChart").remove();
     }
     else{
+
       //Change style
       mediaG.selectAll("circle").classed("selectedMedia", false);
       mediaG.selectAll("circle").classed("notSelectedMedia", true);
@@ -325,11 +321,12 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
 
       tweetChartActive = true;
       updateMediaBubblesAxis();
+
       var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
       var marginHeight = 2/100*heightSvg;
-      var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
-
-      let valueTransform = yMainImg-d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0];
+      //var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
+      var yMainImg = yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin + tweetLegendMargin + tweetHeight/2 + tweetHeight/2 + tweetLegendMargin;
+      //let valueTransform = yMainImg-d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0];
       var transformLegend = "translate(0,"+yMainImg+")";
 
 
@@ -345,7 +342,8 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   })
   .on('mouseout', function(d){
     d3.selectAll("#mediaBubbles circle").classed("notHoveredMedia",false);
-    if(tweetsG.selectAll("g")._groups[0].length !== 0){
+    console.log(tweetsG.selectAll("g")._groups[0].length);
+    if(tweetsG.selectAll("g")._groups[0].length > 1){ //1 for legend at the begining
       d3.select(this).classed("notSelectedMedia",true);
     };
     mediaTip.hide(d);
@@ -376,10 +374,11 @@ function getMediaTipText(d, formatNumber){
 function scrollToTweet(){
   d3.select("body").style("cursor","progress");
   var nb_scroll = 1;
-  var distanceToScroll =  yMediasPosition + interCategorySpace* nbCategoriesDisplayed - window.pageYOffset;
+  var distanceToScroll =  attractionCenterY() - window.pageYOffset;
   var timer = setTimeout(function(){
     d3.select("body").style("cursor","default");
-    window.scrollBy(0, distanceToScroll/nb_scroll);
+    window.scrollTo(0,attractionCenterY()+(tweetVerticalMargin+tweetLegendMargin)*2)
+    //window.scrollBy(0, distanceToScroll/nb_scroll);
   },500);
 }
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement

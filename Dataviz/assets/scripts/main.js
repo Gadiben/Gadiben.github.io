@@ -1,6 +1,6 @@
 //on récupère le fichier csv qui contient les tweets
 d3.dsv("|","https://gadiben.github.io/Dataviz/data/FranceMedia.csv").then(function(france_data) {
-  d3.dsv("|","https://gadiben.github.io/Dataviz/data/QuebecMedia.csv").then(function(quebec_data) {
+  d3.dsv("|",".https://gadiben.github.io/Dataviz/data/QuebecMedia.csv").then(function(quebec_data) {
     d3.dsv(",", "https://gadiben.github.io/Dataviz/data/categories.csv").then(function(medias_data) {
 
       //Preprocessing
@@ -63,15 +63,14 @@ d3.dsv("|","https://gadiben.github.io/Dataviz/data/FranceMedia.csv").then(functi
       createMediaBubblesYAxis(mediaYAxisGroup, xMedias);
       updateMediaBubblesAxis();
       //place filters
-      console.log(svgBounds);
+      var grouptweetChartLegend = tweetsChartGroup.append("g").attr("class", "chartTweetAndLgend")
+      legend(svg); // a besoin d'etre appelé avant createMediaBubbleChart car set une valur utilisée pour psitionner le titre du chart
+      legendTweet(svg, grouptweetChartLegend);
+      createSentimentArrow(svg, xMedias);
+      createMediaBubbleChart(mediaBubblesGroup, mediaSources, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
       d3.select(".filtres")
       .attr("transform","translate("+svgBounds.x+","+svgBounds.y+")")
-      d3.select(".legend")
-      .attr("transform","translate("+svgBounds.x + svgBounds.width +","+svgBounds.y+")")
-      var grouptweetChartLegend = svg.append("g").attr("class", "chartTweetAndLgend")
-      legend(svg, svgBounds, grouptweetChartLegend); // a besoin d'etre appelé avant createMediaBubbleChart car set une valur utilisée pour psitionner le titre du chart
-      createMediaBubbleChart(mediaBubblesGroup, mediaSources, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData);
-
+      .attr("hidden",null)
     });
   });
 });
