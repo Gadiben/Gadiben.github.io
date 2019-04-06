@@ -1,6 +1,6 @@
 //on récupère le fichier csv qui contient les tweets
 d3.dsv("|","https://gadiben.github.io/Dataviz/data/FranceMedia.csv").then(function(france_data) {
-  d3.dsv("|","https://gadiben.github.io/Dataviz/data/QuebecMedia.csv").then(function(quebec_data) {
+  d3.dsv("|",".https://gadiben.github.io/Dataviz/data/QuebecMedia.csv").then(function(quebec_data) {
     d3.dsv(",", "https://gadiben.github.io/Dataviz/data/categories.csv").then(function(medias_data) {
 
 
@@ -33,7 +33,7 @@ d3.dsv("|","https://gadiben.github.io/Dataviz/data/FranceMedia.csv").then(functi
 
       updateWindowSize(svg);
       window.addEventListener("resize", function() { updateWindowSize(svg); });
-      tweetsSquareSize = svgBounds.width / (numberBucket * nbColumnPerBucket);
+      tweetsSquareSize = (svgBounds.width - 2*tweetHorizontalMargin) / (numberBucket * nbColumnPerBucket);
       //numberBucket = Math.floor(svgBounds.width / (nbColumnPerBucket * tweetsSquareSize));
       //console.log(numberBucket);
 
