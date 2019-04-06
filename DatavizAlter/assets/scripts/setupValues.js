@@ -62,7 +62,7 @@ const tweetBubblesSizePercentage = {min: 5, max: 300};
 var tweetBubblesSize;
 // Colors
 var middleColor = "#cccccc";
-var redColor = "#1dcaff";
+var redColor = "#f00";
 var greenColor = "#00ad19";
 
 
@@ -76,7 +76,8 @@ var tweetHeight = 500; //Calculated for each media // TODO
 
 // Separation between media chart and tweet chart in px
 const tweetVerticalMargin = 100;
-const tweetLegendMargin = 20;
+const tweetHorizontalMargin = 20;
+const tweetLegendMargin = 60;
 // Simulation setup values
 var forceStrengthTweet = 0.07;
 var tweetChartActive = false;

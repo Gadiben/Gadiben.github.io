@@ -8,7 +8,11 @@
  * @param initPosition
  * @param svg
  */
-function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, mediaName){
+function createTweetsBubbleChart(g, x, sourceBuckets, initPosition, mediaName){
+  var colorRedMiddle = d3.scaleLinear()
+          .domain([0, Math.log10(39000)])
+          .range([middleColor,redColor])
+          .interpolate(d3.interpolateHcl);
   g.selectAll("g").remove()
   g.select("#titreTweetChart").remove();
   g.append("text")
@@ -18,14 +22,12 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
   .attr("y", attractionCenterY() - tweetHeight/2 - tweetLegendMargin)
   .style("font-weight", "bold")
   .attr("text-anchor", "middle");
-  tip.html(function(d) {
-    return getTweetTipText.call(this, d, formatNumber)
-  });
   var bucketIndex = 0;
   var bucketsGroup = g.append("g")
   var tweetRankDelay = -1;
   var inBetweenTweetDelay = 2;
-
+  var tweetTransitionTime = 1000;
+  var lowestSquareY = 0;
   sourceBuckets.forEach((bucket) => {
     var bucketG = bucketsGroup.append("g");
     var bubbleGroups = bucketG.selectAll("g").data(bucket);
@@ -50,21 +52,17 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
       .style("z-index","-1")
     })
     //pour chaque tweet on crée un rect
-    var tweetTransitionTime = 1000;
     var tweetRect = tweetG.append("rect")
     .attr("width", tweetsSquareSize) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
     .attr("height", tweetsSquareSize) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
     .attr("x",initPosition.x)
     .attr("y", initPosition.y)
-    .attr("id",d => d.id)
-    .datum(function(d){
-      replaceSVG($svg, d.id, initPosition.x, initPosition.y, d.retweet_count); //on le place dans le groupe correspondant à son sentiment (positif, neutre, negatif)
-      return d;
-    })
+    .attr("fill", d =>colorRedMiddle(Math.log10(d.retweet_count+1)))
+    .attr("stroke", d =>colorRedMiddle(Math.log10(d.retweet_count+1)))
     var tweetRankx = -1;
     var tweetRanky = -1;
-    var bucketSize = svgBounds.width / numberBucket;
-    var lastSquareYPos = attractionCenterY() - tweetHeight/2;
+    var bucketSize = (svgBounds.width-2*tweetHorizontalMargin) / numberBucket;
+    var lastSquareYPos = attractionCenterY() - tweetHeight/2; //initial y position
     tweetRect.transition()
     .duration(tweetTransitionTime)
     .delay(d => {
@@ -74,49 +72,35 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition,$svg, tip, me
     .attr("x",function(d) {
       tweetRankx++;
       var xCoordMod = tweetRankx % (Math.floor(bucketSize/tweetsSquareSize));
-      var xCoord = bucketIndex/numberBucket * svgBounds.width + xCoordMod*tweetsSquareSize;
-      /*
-      d3.select(d3.select(this).node().parentNode).select("svg")
-      .transition()
-      .duration(tweetTransitionTime)
-      .attr("x",xCoord)
-      */
+      var xCoord = tweetHorizontalMargin + bucketIndex * bucketSize + xCoordMod*tweetsSquareSize;
       return xCoord
     })
     .attr("y", function(d){
       tweetRanky++;
       if(tweetRanky % (Math.floor(bucketSize/tweetsSquareSize)) == 0 ){
         lastSquareYPos += tweetsSquareSize;
+        lowestSquareY = Math.max(lowestSquareY,lastSquareYPos)
       }
-      /*
-      d3.select(d3.select(this).node().parentNode).select("svg")
-      .transition()
-      .duration(tweetTransitionTime)
-      .attr("y",lastSquareYPos)// +d.retweet_count)
-      */
       return lastSquareYPos;
     })
-
-
-    //bubbleGroups = bubbleGroups.merge(tweetG);
     bucketIndex++;
   })
-  //bucketsGroup.call(tip);
+  var axisGroup = g.append("g").classed("tweetAxis",true)
+  //// DEBUG:
+  /*
+  axisGroup.append("line")
+  .attr("stroke","black")
+  .style("opacity","0.5")
+  .attr("x1",0)
+  .attr("x2",svgBounds.width)
+  .attr("y1",lowestSquareY+tweetsSquareSize)
+  .attr("y2",lowestSquareY+tweetsSquareSize)
+  */
+  tweetHeight = lowestSquareY+tweetsSquareSize - (attractionCenterY()-tweetHeight/2);
+  createTweetAxis(axisGroup,tweetTransitionTime)
+  updateSvgSize()
+  updateTweetLegends();
   return bucketsGroup;
-}
-//récupère l'image de l'oiseau puis crée le graphique
-function launchTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,formatNumber, mediaName){
-    tweetChartActive = true;
-    jQuery.get("assets/images/bird.svg", function(svgData) {
-      var $svg = jQuery(svgData).find('svg');
-      var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .attr('width',100)
-        .offset([-10, 0]);
-      var bubbleGroups = createTweetsBubbleChart(bubbleChartGroup,xBubbleScale,source,initPosition,$svg,tip, mediaName);
-
-      //runTweetSimulation(source,bubbleGroups,xBubbleScale);
-    },'xml');
 }
   // https://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement
   // https://stackoverflow.com/questions/24933430/img-src-svg-changing-the-fill-color
@@ -126,4 +110,51 @@ function getTweetTipText(d, formatNumber){
   tipText += "<span>Nombre de retweets: <strong>" + formatNumber(+d.retweet_count) + "</strong></span><br>";
   tipText += "<span>Sentiment: <strong style='color:"+d3.interpolateRdYlGn((+d.sentiment/2+0.5))+"'>" + formatNumber(+d.sentiment) + "</strong></span><br>";
   return tipText;
+}
+
+function createTweetAxis(axisGroup,tweetTransitionTime){
+  var topTweetY = attractionCenterY()-tweetHeight/2;
+  for (var bucketIndex = 0; bucketIndex <= numberBucket; bucketIndex++) {
+    var xBucket = tweetHorizontalMargin + bucketIndex * (svgBounds.width-2*tweetHorizontalMargin) / numberBucket;
+    axisGroup.append("line")
+    .attr("x1",xBucket)
+    .attr("x2",xBucket)
+    .attr("y1",topTweetY)
+    .attr("y2",topTweetY)
+    .attr("stroke", "grey")
+    .attr("opacity", 0.5)
+    .style("stroke-dasharray",tweetsSquareSize/2+" "+tweetsSquareSize/2) //For each square 1 dash 1 hole
+    .transition()
+    .duration(tweetTransitionTime)
+    .delay(50*bucketIndex)
+    .attr("y2",topTweetY + tweetHeight +2*tweetsSquareSize);
+    axisGroup.append("text")
+    .attr("text-anchor", "middle")
+    .attr("x",xBucket)
+    .attr("y",topTweetY-6)
+    .text(localization.getFormattedNumber(bucketIndex/numberBucket*2-1))
+    .attr("fill","grey")
+    .style("font-size","10pt")
+  }
+  axisGroup.append("line")
+  .attr("stroke","black")
+  .style("opacity","0.5")
+  .attr("x1",0)
+  .attr("x2",0)
+  .attr("y1",topTweetY+tweetsSquareSize)
+  .attr("y2",topTweetY+tweetsSquareSize)
+  .transition()
+  .duration(tweetTransitionTime*2)
+  .attr("x2",svgBounds.width)
+}
+
+function updateTweetLegends(){
+  var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
+  var marginHeight = 2/100*heightSvg;
+  //var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
+  var yMainImg = yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin + tweetLegendMargin + tweetHeight/2 + tweetHeight/2 + tweetLegendMargin;
+  //let valueTransform = yMainImg-d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0];
+  var transformLegend = "translate(0,"+yMainImg+")";
+  d3.select("#legendImage").attr("transform", transformLegend);
+  d3.select("#legendImage").transition().duration(500).attr("opacity",1);
 }
