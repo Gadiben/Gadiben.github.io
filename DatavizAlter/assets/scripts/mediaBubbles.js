@@ -245,7 +245,7 @@ function updateMediaBubblesAxis() {
  * @param tweetSources  les donneés : les tweets associiés à un média (issus du fichier csv non modifié)
  */
 
-function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXScale,formatNumber,scaleBubbleSizeMediaChart, scaleBubbleSizeTweetChart, mediasData){
+function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXScale,formatNumber,scaleBubbleSizeMediaChart, tweetColorScale, mediasData){
   var mediaTip = d3.tip()
     .attr('class', 'd3-tip')
     .attr('width', 100)
@@ -290,6 +290,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
   .attr("cx", d => d.x)
   .attr("cy", d => d.y)
   .on("click", function(d){
+    updateFilterCheck();
     var mouseCoordinates= d3.mouse(this);
     let initPosition = {"x":mouseCoordinates[0], "y":mouseCoordinates[1]}
     initPosition = {"x":d3.select(this).attr("cx"),"y":d3.select(this).attr("cy")}
@@ -302,7 +303,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
 
     if(d3.select("#media"+d.name.substring(1)).classed("selectedMedia")){
       d3.select("#media"+d.name.substring(1)).classed("selectedMedia", false);
-      tweetsG.selectAll("g:not(.chartTweetAndLgend)").remove();
+      tweetsG.selectAll("g").remove();
       d3.select(".chartTweetAndLgend").transition().duration(250)
       .attr("opacity","0")
       mediaG.selectAll("circle").classed("notSelectedMedia", false);
@@ -323,7 +324,7 @@ function createMediaBubbleChart(g,mediaSources, tweetsG, tweetSources, mediaXSca
       .attr("opacity","1")
       d3.select("body").style("cursor","progress");
 
-      createTweetsBubbleChart(tweetsG,scaleBubbleSizeTweetChart,tweetSources[d.name].buckets,initPosition, d.fullName)
+      createTweetsBubbleChart(tweetsG,tweetColorScale,tweetSources[d.name].buckets,initPosition, d.fullName)
 
       scrollToTweet();
 
@@ -383,8 +384,8 @@ function createAnnotations(g){
   var annotationGroup = g.append("g").classed("annotations",true)
   d3.xml("https://gadiben.github.io/DatavizAlter/assets/images/arrow.svg").then(data => {
     $(".annotations").append(data.documentElement)
-    var annotationx = svgBounds.width/3;
-    var annotationy = topMediaMarginY+10;
+    var annotationx = svgBounds.width/3 +10;
+    var annotationy = topMediaMarginY+30;
     annotationGroup.select("svg")
     .attr('width', 50)
     .attr('height', 50)

@@ -8,13 +8,14 @@
  * @param initPosition
  * @param svg
  */
-function createTweetsBubbleChart(g, x, sourceBuckets, initPosition, mediaName){
-  var colorRedMiddle = d3.scaleLinear()
-          .domain([0, Math.log10(39000)])
-          .range([middleColor,redColor])
-          .interpolate(d3.interpolateHcl);
-  g.selectAll("g:not(.chartTweetAndLgend)").remove()
+function createTweetsBubbleChart(g, tweetColorScale, sourceBuckets, initPosition, mediaName){
+  g.selectAll("g").remove()
   g.select("#titreTweetChart").remove();
+
+  var legendGroup = g.append("g").classed("chartTweetAndLgend",true)
+  createTweetLegend(legendGroup);
+
+
   g.append("text")
   .attr("id", "titreTweetChart")
   .text("Sentiments des tweets du journal "+mediaName)
@@ -34,8 +35,10 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition, mediaName){
     var tweetG = bubbleGroups.enter().append("g")
     .on('mouseover',function(d){
       var rectSon = d3.select(this).select("rect");
+      var translationFilter = (nbCategoriesDisplayed-previousNbCategoriesDisplayed)*interCategorySpace;
+      var yCoord = +rectSon.attr("y")+translationFilter;
       d3.select(".tweetTip").select("p").html(getTweetTipText(d, localization.getFormattedNumber))
-      .style("transform","translate("+rectSon.attr("x")+"px,"+rectSon.attr("y") + "px)")
+      .style("transform","translate("+rectSon.attr("x")+"px,"+yCoord+ "px)")
       d3.select(".tweetTip")
       .style("z-index","2")
       .transition()
@@ -57,8 +60,8 @@ function createTweetsBubbleChart(g, x, sourceBuckets, initPosition, mediaName){
     .attr("height", tweetsSquareSize) //dont le rayon dépend du nombre de retweets --> Y a pas des modifs à faire sur source avant pour avoir un seul exemplaire de chaque tweet et le bon nombre de retweets ou c'est fait sur python avant ?
     .attr("x",initPosition.x)
     .attr("y", initPosition.y)
-    .attr("fill", d =>colorRedMiddle(Math.log10(d.retweet_count+1)))
-    .attr("stroke", d =>colorRedMiddle(Math.log10(d.retweet_count+1)))
+    .attr("fill", d =>tweetColorScale(Math.log10(d.retweet_count+1)))
+    .attr("stroke", d =>tweetColorScale(Math.log10(d.retweet_count+1)))
     var tweetRankx = -1;
     var tweetRanky = -1;
     var bucketSize = (svgBounds.width-2*tweetHorizontalMargin) / numberBucket;
@@ -157,4 +160,35 @@ function updateTweetLegends(){
   var transformLegend = "translate(0,"+yMainImg+")";
   d3.select("#legendImage").attr("transform", transformLegend);
   d3.select("#legendImage").transition().duration(500).attr("opacity",1);
+}
+
+function updateTweetChart(){
+  d3.selectAll("#tweetBubbleChart g").style("cursor","default");
+  d3.select("#tweetBubbleChart")
+  .transition()
+  .ease(d3.easeSin)
+  .duration(transitionAxisDuration)
+  .attr("transform", function(){
+    //To use to translate bubbles and images
+    var translation = (nbCategoriesDisplayed-previousNbCategoriesDisplayed)*interCategorySpace
+
+    //Legend Image
+    var legendImageBar = d3.select("#legendImage")
+    legendImageBar.transition()
+    .ease(d3.easeSin)
+    .duration(transitionAxisDuration)
+    .attr("transform", computeTranslateTransform(legendImageBar,translation));
+
+    //transform bubble group
+    return computeTranslateTransform(d3.select(this),translation);
+  })
+  updateSvgSize();
+}
+function computeTranslateTransform(d3Node,translation){
+  var nodeTransform = d3Node.attr("transform");
+  if(nodeTransform){
+    var oldTranslate = nodeTransform.split(",")[1].split(")")[0];
+    translation += +oldTranslate;
+  }
+  return "translate(0," + translation + ")";
 }
