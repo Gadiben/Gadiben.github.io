@@ -10,7 +10,7 @@ var svgBounds;
 const countries_population = {France: 67190000, Quebec: 8390000};
 
 //Bubble colors legend
-const countriesColors = {France: "#555", Quebec: "#ddd"};
+const countriesColors = {France: "#777", Quebec: "#ddd"};
 const categoriesColors = {Tele: "#9adb0f", Ecrit: "#1ad5f2", Radio: "#ed8210"};
 const categoriesNames = {France: "France", Quebec: "Québec", Tele: "Télévisuelle", Ecrit: "Ecrite", Radio: "Radio"};
 
@@ -87,3 +87,4 @@ var collisionTweetMargin = 1;
 
 // Height of the gradient rectangle for color legend of tweets in px
 const tweetLegendHeight = 45;
+const legendFontSize = 13;
