@@ -32,7 +32,11 @@ d3.dsv("|","https://gadiben.github.io/Dataviz/data/FranceMedia.csv").then(functi
       window.addEventListener("resize", function() { updateWindowSize(svg); });
       tweetsSquareSize = (svgBounds.width - 2*tweetHorizontalMargin) / (numberBucket * nbColumnPerBucket);
       //numberBucket = Math.floor(svgBounds.width / (nbColumnPerBucket * tweetsSquareSize));
-      //console.log(numberBucket);
+      if(tweetsSquareSize<3){
+        nbColumnPerBucket = Math.floor(nbColumnPerBucket/2);
+        numberBucket = Math.floor(numberBucket/2)+1;
+        tweetsSquareSize = (svgBounds.width - 2*tweetHorizontalMargin) / (numberBucket * nbColumnPerBucket);
+      }
 
       //Preprocessing
       var mediasData = formatMediasData(medias_data);
