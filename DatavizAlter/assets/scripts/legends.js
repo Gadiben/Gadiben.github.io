@@ -1,5 +1,9 @@
-function legend(svg){
-
+/**
+ * Créer la légende du media chart
+ * @param  {d3 selection} svg Le svg global
+ */
+function mediaChartLegend(svg){
+  //parametres pour la position
   const legendHeight = topMediaMarginY-50;
   const horizontalLegendMargin = 5;
 
@@ -16,11 +20,9 @@ function legend(svg){
   for (let i = 1 ; i < nbColumns ; i++){
     xPos.push(xPos[i-1] - columnSizes[i]);
   }
-
+  //creation du groupe
   var legendGroup = svg.append("g")
     .attr("class", "legend");
-
-  //For the 2 last columns, write the list of countries and categories
 
   //Type of media
   var legendMediaType = legendGroup.append("g");
@@ -28,9 +30,7 @@ function legend(svg){
   var nbCategories = categories.length;
   var categoriesYMargin = getInterMargin(legendHeight, nbCategories, circleDiameter);
 
-  //DEBUG
-  //debugLegend(legendGroup, xPos, columnSizes, legendHeight);
-
+  //pour chaque categorie, on crée un cercle et un texte
   var counter = 0;
   categories.forEach(function(category){
     counter++;
@@ -98,96 +98,83 @@ function legend(svg){
       .attr("stroke", "grey")
     newYPos += circleDiameter/2;
   })
-
-
 }
-
+/**
+ * Calcul la marge vertical entre des elements
+ * @param  {number} totalSize   La taille total du conteneur
+ * @param  {number} nbElements  Le nombre d'éléments dans le conteneur
+ * @param  {number} elementSize La taille de chaque éléments
+ * @return {number}             La marge à mettre en chaque éléments de façon à bien les répartir
+ */
 function getInterMargin(totalSize, nbElements, elementSize) {
   return (totalSize - nbElements*elementSize)/(nbElements+1);
 }
 
-function debugLegend(legendGroup, xPos, columnSizes, legendHeight) {
-  //DEBUG
-  legendGroup.append("rect")
-  .attr("x", xPos[0])
-  .attr("y", 0)
-  .attr("width", columnSizes[0])
-  .attr("height", legendHeight)
-  .attr("stroke", "black")
-  .style("fill", "none")
-  .attr("stroke-width", 0.5);
-  legendGroup.append("rect")
-  .attr("x", xPos[1])
-  .attr("y", 0)
-  .attr("width", columnSizes[1])
-  .attr("height", legendHeight)
-  .attr("stroke", "black")
-  .style("fill", "none")
-  .attr("stroke-width", 0.5);
-  legendGroup.append("rect")
-  .attr("x", xPos[2])
-  .attr("y", 0)
-  .attr("width", columnSizes[2])
-  .attr("height", legendHeight)
-  .attr("stroke", "black")
-  .style("fill", "none")
-  .attr("stroke-width", 0.5);
-}
-
-function legendTweet(svg,g){
-  var heightSvg = yMediasPosition + interCategorySpace*nbCategoriesDisplayed + axisMarginY + tweetVerticalMargin;
-  updateSvgSize();
-  var marginWidth = 4/100*svgBounds.width;
-  var width = svgBounds.width-marginWidth;
-  var marginHeight = 2/100*heightSvg;
-  var yMainImg = heightSvg - marginHeight - tweetLegendHeight + tweetHeight;
-  var rectHeight = (tweetLegendHeight-marginHeight)/2;
-  var accoladeTextHeight = (tweetLegendHeight-marginHeight)/2;
-  var transform = "translate("+0+","+yMainImg+")";
-  //console.log(transform);
-  var grp = svg.append("g").attr("id", "legendImage").attr("opacity", 0).attr("transform",transform).attr("height", tweetLegendHeight);
-  //console.log(d3.select("#legendImage").attr("transform").split(",")[1].split(")")[0]);
-  /*
-  grp.append("svg:image")
-  .attr("class", "imgLegend")
-  .attr("xlink:href", "assets/images/echelleCouleurs.png")
-  .attr("x",marginWidth/2)
-  .attr("preserveAspectRatio", "none")
-  .attr("width",width )
-  .attr('height', rectHeight);
-  */
-
-  for(var i=0; i<3;i++){
-    var grplegende=grp.append("g");
-    /*
-    grplegende.append("svg:image")
-    .attr("class", "imgAccolade")
-    .attr("xlink:href", "assets/images/accolade.png")
-    .attr("x",marginWidth/2+i*width/3)
-    .attr("y",rectHeight)
-    .attr("preserveAspectRatio", "none")
-    .attr("width", 1/3*width)
-    .attr('height', accoladeTextHeight/2);
-    */
-    grplegende.append("text")
-    .text(function(d){
-      if(i==0){
-        return "Sentiment négatif";
-      }
-      if(i==1){
-        return "Neutre";
-      }
-      if(i==2){
-        return "Sentiment positif";
-      }
-      return;
-    })
-    .attr("x",marginWidth/2+(i+1/2)*width/3)
-    .attr("y", rectHeight+accoladeTextHeight)
+/**
+ * Créer la fléche de sentiment pour le media chart
+ * @param  {d3 selection} g       Le groupe qui va contenir la flêche
+ * @param  {d3 selection} xMedias L'échelle de placement des bulles du media chart
+ */
+function createSentimentArrow(g, xMedias) {
+  var longueurArrow = 40;
+  var axisTitle = g.append("text")
+    .text("sentiment")
     .attr("text-anchor", "middle")
-  }
+    .attr("x", xMedias(0))
+    .attr("y", yMediasPosition - axisMarginY - 27)
+    .attr("fill", "grey")
+    .attr("font-size", "0.8em")
+  var legendAxis = g.append("g");
+  g.append("svg:defs").append("svg:marker")
+      .attr("id", "triangle")
+      .attr("refX", 6)
+      .attr("refY", 6)
+      .attr("markerWidth", 30)
+      .attr("markerHeight", 30)
+      .attr("orient", "auto")
+      .append("path")
+      .attr("d", "M 0 0 12 6 0 12 3 6")
+      .style("fill", "grey");
+
+  legendAxis.append("line")
+    .attr("class", "legend_arrow")
+    .attr("x1", xMedias(0)-30)
+    .attr("y1",yMediasPosition - axisMarginY - 30)
+    .attr("x2", xMedias(0)-30-longueurArrow)
+    .attr("y2", yMediasPosition - axisMarginY - 30)
+    .attr("stroke-width", 1)
+    .attr("stroke", "grey")
+    .attr("marker-end", "url(#triangle)");
+    legendAxis.append("text")
+    .text("-")
+    .attr("text-anchor", "middle")
+    .attr("x", xMedias(0)-30-longueurArrow/2)
+    .attr("y", yMediasPosition - axisMarginY - 30)
+    .attr("fill", "grey")
+
+  legendAxis.append("line")
+    .attr("class", "legend_arrow")
+    .attr("x1", xMedias(0)+30)
+    .attr("y1", yMediasPosition - axisMarginY - 30)
+    .attr("x2", xMedias(0)+30+longueurArrow)
+    .attr("y2", yMediasPosition - axisMarginY - 30)
+    .attr("stroke-width", 1)
+    .attr("stroke", "grey")
+    .attr("marker-end", "url(#triangle)");
+  legendAxis.append("text")
+    .text("+")
+    .attr("text-anchor", "middle")
+    .attr("x", xMedias(0)+30+longueurArrow/2)
+    .attr("y", yMediasPosition - axisMarginY - 30)
+    .attr("fill", "grey")
 }
+
+/**
+ * Appelée par createTweetsBubbleChart, crée la légende des tweets
+ * @param  {d3 selection} g Le groupe qui contiendra la légende
+ */
 function createTweetLegend(g){
+  //linear gradient pour la legende des couleurs
   var linearGradient = g.append("defs")
               .append("linearGradient")
               .attr("id", "linear-gradient");
@@ -197,33 +184,73 @@ function createTweetLegend(g){
   linearGradient.append("stop")
                 .attr("offset", "100%")
                 .attr("stop-color", redColor);
-
+  //variables de positionnement
   var gradientHeight = 10;
   var gradientWidth = svgBounds.width * 0.10;
-  var leftMargin = 100;
+  var leftMargin = 3;
   var yGradient = yMediasPosition + (nbCategoriesDisplayed-1)*interCategorySpace + axisMarginY + tweetVerticalMargin;
+
+  gradientWidth = gradientWidth<140 ? 140 : gradientWidth;
+
+  //rectangle legende de couleur
   g.append("rect")
-        .attr("width", gradientWidth)
-        .attr("height",gradientHeight)
-        .style("fill", "url(#linear-gradient)")
-        .attr("x",svgBounds.width - gradientWidth - leftMargin)
-        .attr("y", yGradient)
+    .attr("width", gradientWidth)
+    .attr("height", gradientHeight)
+    .style("fill", "url(#linear-gradient)")
+    .attr("x",svgBounds.width - gradientWidth - leftMargin)
+    .attr("y", yGradient)
+  //textes
   g.append("text")
-            .text("0")
-            .attr("x",svgBounds.width - gradientWidth - leftMargin)
-            .attr("y", yGradient + gradientHeight*3)
-            .attr("text-anchor", "middle");
+    .text("0")
+    .attr("x",svgBounds.width - gradientWidth - leftMargin)
+    .attr("y", yGradient + gradientHeight*3)
+    .attr("text-anchor", "middle");
 
   g.append("text")
-            .text("Nombre de retweets")
-            .attr("x",svgBounds.width - gradientWidth/2 - leftMargin)
-            .attr("y", yGradient - gradientHeight)
-            .attr("text-anchor", "middle");
+    .text("Nombre de retweets")
+    .attr("x",svgBounds.width - leftMargin)
+    .attr("y", yGradient - gradientHeight)
+    .attr("text-anchor", "end");
 
   g.append("text")
-            .text("++")
-            .attr("x",svgBounds.width - leftMargin)
-            .attr("y", yGradient + gradientHeight*3)
-            .attr("text-anchor", "middle");
+    .text("+")
+    .attr("x",svgBounds.width - leftMargin)
+    .attr("y", yGradient + gradientHeight*3)
+    .attr("text-anchor", "middle");
+
+  //Texte du bas
+  g.append("text")
+    .text("Sentiment négatif")
+    .attr("y",yGradient + tweetHeight + tweetLegendMargin*2)
+    .attr("x",tweetHorizontalMargin)
+    .attr("text-anchor", "begin");
+
+  g.append("text")
+    .text("Sentiment neutre")
+    .attr("y",yGradient + tweetHeight + tweetLegendMargin*2)
+    .attr("x",svgBounds.width/2)
+    .attr("text-anchor", "middle");
+
+  g.append("text")
+    .text("Sentiment positif")
+    .attr("y",yGradient + tweetHeight + tweetLegendMargin*2)
+    .attr("x",svgBounds.width - tweetHorizontalMargin)
+    .attr("text-anchor", "end");
+
   g.attr("opacity","1")
+
+  //Add the word cloud
+
+  //Button
+  gradientWidth = gradientWidth<150 ? 150 : gradientWidth;
+  var buttonWCGroup = g.append("g").classed("wordCloudButtonG", "true")
+  buttonWCGroup.append("path")
+    .attr("d", rectBorderRadius(3, yGradient, gradientWidth, 30, 15))
+    .classed("wordCloudButton", "true")
+  buttonWCGroup.append("text")
+    .attr("text-anchor", "middle")
+    .attr("x", gradientWidth/2)
+    .attr("y", yGradient + 20)
+    .attr("fill", "white")
+    .text("Voir le wordcloud")
 }

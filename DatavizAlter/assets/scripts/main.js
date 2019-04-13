@@ -1,5 +1,5 @@
 //on récupère le fichier csv qui contient les tweets
-d3.dsv("|","https://gadiben.github.io/Dataviz/data/FranceMedia.csv").then(function(france_data) {
+d3.dsv("|",".https://gadiben.github.io/Dataviz/data/FranceMedia.csv").then(function(france_data) {
   d3.dsv("|","https://gadiben.github.io/Dataviz/data/QuebecMedia.csv").then(function(quebec_data) {
     d3.dsv(",", "https://gadiben.github.io/Dataviz/data/categories.csv").then(function(medias_data) {
       //Init filter checkbox values
@@ -28,11 +28,14 @@ d3.dsv("|","https://gadiben.github.io/Dataviz/data/FranceMedia.csv").then(functi
       var mediaBubblesGroup = mediaChartGroup.append("g")
         .attr("id", "mediaBubbles")
 
+      //initialisation des constantes qui dépendent de la taille de la fenêtre
       updateWindowSize(svg);
+      //pour être responsive
       window.addEventListener("resize", function() { updateWindowSize(svg); });
+
+      //nombre de buckets du tweet chart depend de la taille de la fenetre
       tweetsSquareSize = (svgBounds.width - 2*tweetHorizontalMargin) / (numberBucket * nbColumnPerBucket);
-      //numberBucket = Math.floor(svgBounds.width / (nbColumnPerBucket * tweetsSquareSize));
-      if(tweetsSquareSize<3){
+      if(tweetsSquareSize<4){
         nbColumnPerBucket = Math.floor(nbColumnPerBucket/2);
         numberBucket = Math.floor(numberBucket/2)+1;
         tweetsSquareSize = (svgBounds.width - 2*tweetHorizontalMargin) / (numberBucket * nbColumnPerBucket);
@@ -40,22 +43,23 @@ d3.dsv("|","https://gadiben.github.io/Dataviz/data/FranceMedia.csv").then(functi
 
       //Preprocessing
       var mediasData = formatMediasData(medias_data);
-      //console.log(mediasData);
       var tweetSources = createSources(france_data.concat(quebec_data));
       var mediaSources = createMediaSources(tweetSources, mediasData);
       var mediaSplitMetadata = createMediaSplitMetadata();
 
-      //ajout d'un titre
-
-
       //RANGE definitions
       //Medias
-      var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]);
-      var xMedias = d3.scaleLinear().range([xMediasPositions.min, xMediasPositions.max]);
+      var scaleBubbleSizeMediaChart =  d3.scaleLinear().range([mediaBubblesSize.min, mediaBubblesSize.max]); //scale pour la taille des bulles
+      var xMedias = d3.scaleLinear().range([xMediasPositions.min, xMediasPositions.max]); //scale pour la position en x
       //Tweets
+      //scale pour la couleur des tweets
       var tweetColorScale = d3.scaleLinear()
               .range([middleColor,redColor])
               .interpolate(d3.interpolateHcl);
+
+      //search bar initialisation
+      initSearchMediasBar(mediaSources, mediaChartGroup, tweetsChartGroup, tweetColorScale, tweetSources);
+
       //DOMAIN definitions
       //Medias
       domainMediaBubbleSize(scaleBubbleSizeMediaChart, medias_data, countries_population);
@@ -63,23 +67,22 @@ d3.dsv("|","https://gadiben.github.io/Dataviz/data/FranceMedia.csv").then(functi
       //Tweets
       domainTweetColorScale(tweetColorScale, tweetSources);
 
-
-      //Bucket sizes
-      // Numb bucket = svgWidth / bucketsize
-
-      // Création du mediaBubbles
+      // Création des axes mediaBubbles
       createMediaBubblesXAxis(mediaXAxisGroup, mediaSplitMetadata);
       createMediaBubblesYAxis(mediaYAxisGroup, xMedias);
       updateMediaBubblesAxis();
-      //place filters
+      //place filters et legendes
       var grouptweetChartLegend = tweetsChartGroup.append("g").attr("class", "chartTweetAndLgend")
-      legend(svg); // a besoin d'etre appelé avant createMediaBubbleChart car set une valur utilisée pour psitionner le titre du chart
-      legendTweet(svg, grouptweetChartLegend);
+      mediaChartLegend(svg); // a besoin d'etre appelé avant createMediaBubbleChart car set une valeur utilisée pour psitionner le titre du chart
       createSentimentArrow(svg, xMedias);
+
+      //creation du media chart
       createMediaBubbleChart(mediaBubblesGroup, mediaSources, tweetsChartGroup, tweetSources, xMedias, localization.getFormattedNumber,scaleBubbleSizeMediaChart, tweetColorScale, mediasData);
       d3.select(".filtres")
       .attr("transform","translate("+svgBounds.x+","+svgBounds.y+")")
       .attr("hidden",null)
+
+      //drawWordCloud(d3.select(".worldCloudTip"), "@BFMTV", tweetSources);
     });
   });
 });
