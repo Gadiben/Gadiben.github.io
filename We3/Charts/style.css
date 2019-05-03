@@ -1,0 +1,13 @@
+body {
+  font: "Arial"
+}
+.circular-bar-svg{
+  transform: translate(0%,0);
+  width: auto;
+}
+
+.circular-bar-svg g{
+  transform: translate(25%,25%);
+}
+.circular-bar-svg rect{
+}
