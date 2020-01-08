@@ -2,8 +2,12 @@ body{
   margin: 0;
 }
 main{
+  /* Letter
   width: 21.59cm;
   height: 55.88cm;
+  */
+  width: 21.00cm;
+  height: 59.40cm;
   display: grid;
   grid-template-rows: 50% 50%;
   grid-template-columns: 1fr;
@@ -12,13 +16,15 @@ main{
   overflow: hidden;
 }
 .page{
-  grid-template-columns:1fr 5fr 2fr;
+  grid-template-columns:1.5fr 7fr 2.5fr;
   display: grid;
   padding: 0 5px;
+  /*border: 1px solid black;*/
 }
 .first-page{
   height: 100%;
-  grid-template-rows: 5fr .8fr 3fr .8fr 9fr;
+  grid-template-rows: 5fr .8fr 3fr 3fr .8fr 9fr;
+  z-index: 10;
 }
 .second-page{
   height: 100%;
@@ -27,24 +33,24 @@ main{
 }
 ul {
   list-style: none;
-  text-align: justify;
+  /*text-align: justify;*/
 }
 h1{
   font-size: 15pt;
 }
 h2{
-  font-size: 12pt;
-}
-h3{
   font-size: 11pt;
 }
-h4{
+h3{
   font-size: 10pt;
+}
+h4{
+  font-size: 9pt;
   margin: auto;
 }
 h5{
   margin: auto;
-  font-size: 9pt;
+  font-size: 8pt;
 }
 .vertical-two{
   grid-row-start: span 2;
@@ -78,7 +84,7 @@ ul{
 }
 .subcell > ul{
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1.5fr 7fr; /*Same ratio as in .page*/
   height: 100%;
 }
 .subcell{
@@ -94,23 +100,33 @@ li.item{
   color: black;
 }
 .right .right-title{
-  margin: 1em;
+  margin: auto;
+  margin-top: 1em;
   margin-bottom: 0;
+  width: 95%;
   background-color: white;
   border-radius: 40px;
-  padding: 10px;
+  padding: 10px 0;
   color: #3578b7;
   text-shadow: none;
 }
+right .right-title:not(#contact){
+  display: grid;
+  grid-template-columns: 1fr 7fr;
+  align-items: center; 
+  place-content: center;
+}
 .right .right-title i{
   font-size: 20pt;
-  margin-right: 10px;
-
 }
 .right .right-title *{
   display: inline;
-  margin: 0;
+  margin: 0 7px;
+  place-self: center;
   vertical-align: middle;
+}
+#contact .right-title *{
+  margin: 0;
 }
 header{
   border: none;
@@ -118,20 +134,48 @@ header{
   border-bottom: 10px solid #3578b7;
   position:relative;
 }
+header a{
+  text-decoration: none;
+  text-decoration: inherit;
+  color: inherit;
+}
+header .photo{
+  height: 100%;
+  align-self: center;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+header .coordinates{
+  text-align: right;
+  align-self: center;
+  padding-right: 10px;
+  display: grid;
+  grid-template-columns: 10fr 1fr;
+  grid-row-gap: 3px;
+  grid-column-gap: 5px;
+  justify-items: center;
+}
+header .coordinates div{
+  justify-self: end;
+}
 .header-title{
   color: white;
   text-shadow: black 1px 1px 1px;
+  display: grid;
+  grid-template-columns: 1fr 5fr 4fr;
+  grid-gap: 10px;
+  margin-top: 5px;
 }
+
 .header-content{
-  margin-left: 40px;
+  margin-left: 10px;
 }
 .intro{
-  width: 90%;
   text-align: justify;
   padding-top: 0.5em;
 }
 .intro p{
-  margin:5px 0;
+  margin:5px 15px;
 }
 .intro ul {
   display: grid;
@@ -222,18 +266,18 @@ li.left{
   margin-top: 15px;
   background-color: white;
   border-radius: 50%;
-  width: 15em;
-  height: 14em;
+  width: 14em;
+  height: 13em;
   overflow: hidden;
   box-sizing: border-box;
   box-shadow: inset 0 0 25px #7fb5e8;
 }
 #wordCloud{
-  width: 23em;
+  width: 22em;
   margin: auto;
   transform: translate(-15%,-12%);
 }
-#logo-INRIA{
+.logo-exp{
   position: absolute;
   top: 40%;
   left: 10%;
@@ -249,7 +293,7 @@ li.left{
 .progLanguage{
   display: grid;
   grid-template-columns: 1fr 2fr;
-  margin: 15px 15px;
+  margin: 15px 10px;
   grid-gap: 0 5px;
 }
 .progLanguage li{
@@ -350,7 +394,7 @@ display: inline;
 }
 #contact ul li{
   display: inline-block;
-  margin: 10px;
+  margin: 10px 0;
 }
 #contact{
   color: white;
@@ -361,8 +405,4 @@ display: inline;
   margin-top: 30px;
   margin-bottom: 10px;
   text-align: center;
-}
-#contact #email{
-  font-size: 10pt;
-
 }
