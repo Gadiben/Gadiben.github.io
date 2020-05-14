@@ -1,13 +1,13 @@
-body{
+body {
   margin: 0;
 }
-main{
+main {
   /* Letter
   width: 21.59cm;
   height: 55.88cm;
   */
-  width: 21.00cm;
-  height: 59.20cm;
+  width: 21cm;
+  height: 59.2cm;
   display: grid;
   grid-template-rows: 50% 50%;
   grid-template-columns: 1fr;
@@ -15,91 +15,93 @@ main{
   font-size: 9pt;
   overflow: hidden;
 }
-.page{
-  grid-template-columns:1.5fr 7fr 2.5fr;
+.page {
+  grid-template-columns: 1.5fr 7fr 2.5fr;
   display: grid;
   padding: 0 5px;
   /*border: 1px solid black;*/
 }
-.first-page{
+.first-page {
   height: 100%;
-  grid-template-rows: 5fr .8fr 2.5fr 2.5fr .8fr 9fr;
+  grid-template-rows: 5fr 0.8fr 2.5fr 2.5fr 0.8fr 9fr;
   z-index: 10;
+  overflow: hidden;
 }
-.second-page{
+.second-page {
   height: 100%;
-  grid-template-rows:0.2fr .6fr 5fr .6fr 2.5fr 2.5fr;
+  grid-template-rows: 0.2fr 0.6fr 5fr 0.6fr 2.5fr 2.5fr;
   display: grid;
 }
 ul {
   list-style: none;
   /*text-align: justify;*/
 }
-h1{
+h1 {
   font-size: 15pt;
 }
-h2{
+h2 {
   font-size: 11pt;
 }
-h3{
+h3 {
   font-size: 10pt;
 }
-h4{
+h4 {
   font-size: 9pt;
   margin: auto;
 }
-h5{
+h5 {
   margin: auto;
   font-size: 8pt;
 }
-.vertical-two{
+.vertical-two {
   grid-row-start: span 2;
 }
-.vertical-five{
+.vertical-five {
   grid-row-start: span 6;
 }
-.vertical-four{
+.vertical-four {
   grid-row-start: span 6;
 }
-.right{
+.right {
   display: grid;
   height: 100%;
 }
-.right > *{
+.right > * {
   padding: 0 5px;
 }
-.right.first{
+.right.first {
   grid-template-rows: 5fr 3fr;
 }
-.right.second{
+.right.second {
   grid-template-rows: 0.5fr 5fr 3.5fr 2.7fr;
 }
 .subcell {
-  grid-column-start:  1;
-  grid-column-end:  3;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
-ul{
+ul {
   padding: 0;
   margin: 0;
 }
-.subcell > ul{
+.subcell > ul {
   display: grid;
   grid-template-columns: 1.5fr 7fr; /*Same ratio as in .page*/
   height: 100%;
 }
-.subcell{
+.subcell {
   grid-column-start: span 2;
 }
-li.item{
-  padding-top: 4px;
+li.item {
+  padding: 4px 0;
   margin-left: 10px;
   margin-right: 10px;
 }
-.right, header{
+.right,
+header {
   background-color: #7fb5e8;
   color: black;
 }
-.right .right-title{
+.right .right-title {
   margin: auto;
   margin-top: 1em;
   margin-bottom: 0;
@@ -110,42 +112,42 @@ li.item{
   color: #3578b7;
   text-shadow: none;
 }
-right .right-title:not(#contact){
+right .right-title:not(#contact) {
   display: grid;
   grid-template-columns: 1fr 7fr;
-  align-items: center; 
+  align-items: center;
   place-content: center;
 }
-.right .right-title i{
+.right .right-title i {
   font-size: 20pt;
 }
-.right .right-title *{
+.right .right-title * {
   display: inline;
   margin: 0 7px;
   place-self: center;
   vertical-align: middle;
 }
-#contact .right-title *{
+#contact .right-title * {
   margin: 0;
 }
-header{
+header {
   border: none;
   grid-column-start: span 3;
   border-bottom: 10px solid #3578b7;
-  position:relative;
+  position: relative;
 }
-header a{
+header a {
   text-decoration: none;
   text-decoration: inherit;
   color: inherit;
 }
-header .photo{
+header .photo {
   height: 100%;
   align-self: center;
   margin-top: 10px;
   border-radius: 10px;
 }
-header .coordinates{
+header .coordinates {
   text-align: right;
   align-self: center;
   padding-right: 10px;
@@ -155,10 +157,10 @@ header .coordinates{
   grid-column-gap: 5px;
   justify-items: center;
 }
-header .coordinates div{
+header .coordinates div {
   justify-self: end;
 }
-.header-title{
+.header-title {
   color: white;
   text-shadow: black 1px 1px 1px;
   display: grid;
@@ -167,33 +169,33 @@ header .coordinates div{
   margin-top: 5px;
 }
 
-.header-content{
+.header-content {
   margin-left: 10px;
 }
-.intro{
+.intro {
   text-align: justify;
   padding-top: 0.5em;
 }
-.intro p{
-  margin:5px 15px;
+.intro p {
+  margin: 5px 15px;
 }
 .intro ul {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
 }
-.intro ul.resume-header{
+.intro ul.resume-header {
   text-align: center;
   margin-bottom: 5px;
   font-weight: bold;
 }
-.intro ul.resume{
+.intro ul.resume {
   grid-gap: 5px 0;
   list-style: initial;
 }
-.intro ul.resume li{
-  margin:0 20px;
+.intro ul.resume li {
+  margin: 0 20px;
 }
-.intro span{
+.intro span {
   margin-left: 20px;
 }
 header .trait {
@@ -202,17 +204,17 @@ header .trait {
   border-bottom: 1.5px solid #3578b7;
   margin: auto;
 }
-.cell h2{
+.cell h2 {
   margin: 1em;
 }
-.cell{
+.cell {
   text-align: justify;
 }
-.left{
+.left {
   background-color: #e8ecf2;
   width: 100%;
 }
-.icon-background{
+.icon-background {
   font-size: 18pt;
   color: white;
   border-radius: 50%;
@@ -223,45 +225,50 @@ header .trait {
   margin-top: 6px;
   text-align: center;
 }
-.vertical-two .icon-background{
+.vertical-two .icon-background {
   margin-top: 0;
 }
-.left, .middle {
+.left,
+.middle {
   position: relative;
 }
-.left i{
-  transform: translate(0,20%);
+.left i {
+  transform: translate(0, 20%);
 }
-li.left{
+li.left {
   width: 100%;
   height: 100%;
   padding-top: 8px;
 }
-.left ul,li.left{
+li.left .logo svg {
+  margin-top: 8px;
+  width: 80px;
+}
+.left ul,
+li.left {
   margin: auto;
   text-align: center;
   font-weight: bold;
   color: #6f7072;
 }
-.item{
+.item {
   position: relative;
   padding: 0 15px 0 5px;
 }
-.item img{
+.item img {
   position: absolute;
   top: -5%;
   right: 3%;
   width: 8em;
 }
-.item ul{
-  margin: 10px 0 0 20px;
+.item ul {
+  margin: 5px 0 0 20px;
   list-style: circle;
 }
-.formation ul .item >*:not(:first-child){
+.formation ul .item > *:not(:first-child) {
   margin: 3px 0 0 20px;
-
 }
-#wordcloud-container{
+#wordcloud-container {
   margin: auto;
   margin-top: 15px;
   background-color: white;
@@ -272,43 +279,43 @@ li.left{
   box-sizing: border-box;
   box-shadow: inset 0 0 25px #7fb5e8;
 }
-#wordCloud{
+#wordCloud {
   width: 22em;
   margin: auto;
-  transform: translate(-15%,-12%);
+  transform: translate(-15%, -12%);
 }
-.logo-exp{
+.logo-exp {
   position: absolute;
   top: 40%;
   left: 10%;
   width: 7em;
 }
-.middle{
-  /*border-bottom: 3px solid #e8ecf2;*/
-}
-.skills{
+/* .middle {
+  /*border-bottom: 3px solid #e8ecf2;
+} */
+.skills {
   display: grid;
   grid-template-rows: 1fr 1fr;
 }
-.progLanguage{
+.progLanguage {
   display: grid;
   grid-template-columns: 1fr 2fr;
   margin: 15px 10px;
   grid-gap: 0 5px;
 }
-.progLanguage li{
+.progLanguage li {
   align-self: center;
 }
-.progLanguage li div i{
+.progLanguage li div i {
   margin: 0 2px;
 }
-.bar{
+.bar {
   border-radius: 50px;
   background-color: white;
   height: 100%;
 }
 
-.container{
+.container {
   padding: 2px;
   border-radius: 50px;
   height: 10px;
@@ -316,98 +323,95 @@ li.left{
   width: 100%;
 }
 
-.languages-grid{
+.languages-grid {
   font-size: 10pt;
   margin: 15px 2px;
   display: grid;
-  grid-template-columns: repeat(2,auto);
-  grid-template-rows: repeat(5,auto);
-  grid-gap:0px 6px;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(5, auto);
+  grid-gap: 0px 6px;
 }
-.languages-grid li{
+.languages-grid li {
   align-self: center;
   padding-top: 5px;
   padding-bottom: 5px;
 }
-.langue{
+.langue {
   padding-right: 6px;
   font-weight: bold;
   justify-self: end;
   border-right: 1px solid #3578b7;
 }
-.tools{
+.tools {
   margin: 10px 0;
   display: grid;
   grid-template-columns: auto auto;
   grid-gap: 20px 10px;
   font-size: 10pt;
-  
 }
-.tools li{
+.tools li {
   justify-self: start;
 }
-.tools li:not(.category){
+.tools li:not(.category) {
   border-left: 1px solid #3578b7;
   padding-left: 6px;
 }
-.tools li.category{
+.tools li.category {
   align-self: center;
   justify-self: end;
   text-align: end;
-  
 }
 .certification {
   display: grid;
   margin: 20px 0;
   grid-gap: 20px;
 }
-.certification li{
+.certification li {
   text-align: center;
 }
-.hobbies{
+.hobbies {
   display: grid;
   grid-template-columns: auto auto;
   grid-gap: 10px 5px;
   margin: 0 10px;
   margin-bottom: 5px;
 }
-h2.hobbies-titre{
+h2.hobbies-titre {
   margin-bottom: 5px;
 }
-.hobbies li.logo{
+.hobbies li.logo {
   font-size: 17pt;
   justify-self: center;
   align-self: center;
 }
 
-.hobbies .item p{
+.hobbies .item p {
   margin: 5px 10px;
 }
 
-.hobbies .item ul{
+.hobbies .item ul {
   margin: 0 10px;
   list-style: none;
 }
-.hobbies .item ul li{
-display: inline;
+.hobbies .item ul li {
+  display: inline;
 }
 
-
-#contact ul{
+#contact ul {
   text-align: center;
   text-decoration: none;
   padding: 0;
   text-shadow: 1px 1px black;
 }
-#contact ul li{
+#contact ul li {
   display: inline-block;
   margin: 10px 0;
 }
-#contact{
+#contact {
   color: white;
   background-color: #3578b7;
 }
-#contact .right-title{
+#contact .right-title {
   border-radius: 0px;
   margin-top: 30px;
   margin-bottom: 10px;
