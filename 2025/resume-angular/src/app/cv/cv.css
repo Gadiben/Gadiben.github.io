@@ -1,23 +1,27 @@
 
 .cv-container {
-	font-family: Tahoma, Geneva, Verdana, sans-serif;
+	font-family: Tahoma, sans-serif;
 	padding: 2rem;
+	background-color: #f7f7fa;
+	width: 21cm;
+  	height: 29.7cm;
+
 }
 .cv-header {
 	display: flex;
 	align-items: center;
 	gap: 2rem;
-	margin-bottom: 2rem;
+	margin-bottom: 1rem;
 	background: #7fb5e8;
-	border-radius: 8px;
+	border-radius: 0 8px;
 	padding: 1.5rem 1rem;
 }
 .cv-photo img {
 	width: 120px;
 	height: 120px;
 	object-fit: cover;
-	border-radius: 50%;
-	border: 2px solid #7702FF;
+	border-radius: 10%;
+	border: solid #3578b7 3px;
 }
 .cv-contact {
 	flex: 1;
@@ -28,19 +32,19 @@
 }
 .cv-main {
 	display: flex;
-	gap: 2rem;
+	gap: 1rem;
 }
-.cv-left, .cv-center, .cv-right {
-	flex: 1;
-	background: #f7f7fa;
+.cv-center, .cv-right {
 	padding: 1rem;
-	border-radius: 8px;
+	border-radius: 0 8px;
+}
+.cv-center {
+	flex: 3;
+	background-color: #e8ecf2;
 }
 .cv-right {
+	flex: 1;
 	background: #7fb5e8;
-}
-.cv-left {
-	max-width: 180px;
 }
 .cv-icon {
 	font-weight: bold;

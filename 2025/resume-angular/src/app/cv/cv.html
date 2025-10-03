@@ -15,21 +15,12 @@
 
 	<!-- Section centrale en 3 colonnes -->
 	<section class="cv-main">
-		<div class="cv-left">
-			<h3>Parcours</h3>
-			<ul>
-				<li *ngFor="let item of cvData.timeline">
-					<span class="cv-icon">{{ item.icone }}</span>
-					<span class="cv-date">{{ item.date }}</span>
-					<span class="cv-label">{{ item.label }}</span>
-				</li>
-			</ul>
-		</div>
 		<div class="cv-center">
 			<h3>Expériences</h3>
 			<div *ngFor="let exp of cvData.experiences" class="cv-experience">
 				<strong>{{ exp.titre }}</strong> - {{ exp.entreprise }}<br />
 				<span>{{ exp.periode }}</span>
+				<p>Challenges: {{ exp.challenges }}</p>
 				<p>{{ exp.description }}</p>
 			</div>
 			<h3>Formations</h3>

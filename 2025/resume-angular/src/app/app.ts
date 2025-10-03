@@ -1,14 +1,15 @@
-import { Component, signal } from '@angular/core';
 
-import { Cv } from './cv/cv';
+import { Component } from '@angular/core';
+import { provideRouter, RouterOutlet } from '@angular/router';
+import { routes } from './app.routes';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Cv],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('resume-angular');
+  protected readonly title = 'resume-angular';
 }
