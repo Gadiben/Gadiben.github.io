@@ -2,12 +2,12 @@
   "experiences": [
     "Product Owner backup",
     "Convert docker compose application to kubernetes",
-    "Setup Jenkins pieline",
-    "Setup mendatory pr checks UTs and liny and code analysis",
+    "Setup Jenkins CI / CD pipeline",
+    "Setup mandatory pr checks UTs and linting and code analysis",
     "TDD: Test then code",
     "Manage junior development team",
     "Architecture and infrastructure design",
-    "Data analysis of logs to identify and imporve painpoints latencies and bottleneck in application",
+    "Data analysis of logs to identify and improve painpoints latencies and bottleneck in application",
     "Extensive support and bug investigation",
     ""
   ],
@@ -16,7 +16,7 @@
       "title": "Import pipeline rework with argo",
       "goal": "Import pipeline is sequential and conflicting with webapplication. Open door to external data, something will crash. need better debugging and actionnability on process.",
       "content": "Setup argo pipeline. Externalize import break it down to simple testable debuggle steps, robust with retry mechanism. Easimy scalable as the cluster ressource is the limit. Each step is a pod. Easily maintable as known tool k8s native.",
-      "limits": "Dev env not compatible. Not docker compose compatible. solution with the help of copilot generate script run by pod."
+      "limits": "Argo and k8s bound. Dev env not compatible. Not docker compose compatible. solution with the help of copilot generate script run by pod."
     }
   ]
 }

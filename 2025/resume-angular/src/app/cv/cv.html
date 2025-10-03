@@ -1,0 +1,56 @@
+<div *ngIf="cvData" class="cv-container">
+	<!-- Section horizontale : photo + contacts + description -->
+	<section class="cv-header">
+		<div class="cv-photo">
+			<img [src]="cvData.photo" alt="Photo" />
+		</div>
+		<div class="cv-contact">
+			<h2>{{ cvData.contact.nom }}</h2>
+			<p>Email : {{ cvData.contact.email }}</p>
+			<p>Téléphone : {{ cvData.contact.telephone }}</p>
+			<p>LinkedIn : <a [href]="cvData.contact.linkedin" target="_blank">{{ cvData.contact.linkedin }}</a></p>
+			<p class="cv-description">{{ cvData.description }}</p>
+		</div>
+	</section>
+
+	<!-- Section centrale en 3 colonnes -->
+	<section class="cv-main">
+		<div class="cv-left">
+			<h3>Parcours</h3>
+			<ul>
+				<li *ngFor="let item of cvData.timeline">
+					<span class="cv-icon">{{ item.icone }}</span>
+					<span class="cv-date">{{ item.date }}</span>
+					<span class="cv-label">{{ item.label }}</span>
+				</li>
+			</ul>
+		</div>
+		<div class="cv-center">
+			<h3>Expériences</h3>
+			<div *ngFor="let exp of cvData.experiences" class="cv-experience">
+				<strong>{{ exp.titre }}</strong> - {{ exp.entreprise }}<br />
+				<span>{{ exp.periode }}</span>
+				<p>{{ exp.description }}</p>
+			</div>
+			<h3>Formations</h3>
+			<div *ngFor="let form of cvData.formations" class="cv-formation">
+				<strong>{{ form.diplome }}</strong> - {{ form.ecole }}<br />
+				<span>{{ form.annee }}</span>
+			</div>
+		</div>
+		<div class="cv-right">
+			<h3>Compétences</h3>
+			<ul>
+				<li *ngFor="let comp of cvData.competences">{{ comp }}</li>
+			</ul>
+			<h3>Langues</h3>
+			<ul>
+				<li *ngFor="let lang of cvData.langues">{{ lang }}</li>
+			</ul>
+			<h3>Technologies</h3>
+			<ul>
+				<li *ngFor="let tech of cvData.technologies">{{ tech }}</li>
+			</ul>
+		</div>
+	</section>
+</div>

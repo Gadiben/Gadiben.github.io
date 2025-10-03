@@ -1,0 +1,32 @@
+{
+  "photo": "assets/photo.jpg",
+  "contact": {
+    "nom": "Votre Nom",
+    "email": "email@example.com",
+    "telephone": "+33 6 12 34 56 78",
+    "linkedin": "https://linkedin.com/in/votreprofil"
+  },
+  "description": "Développeur passionné, spécialisé en Angular et technologies web. Expérience dans la création d'applications modernes et performantes.",
+  "timeline": [
+    { "icone": "school", "date": "2018-2021", "label": "Master Informatique" },
+    { "icone": "work", "date": "2021-2025", "label": "Développeur Web" }
+  ],
+  "experiences": [
+    {
+      "titre": "Développeur Frontend",
+      "entreprise": "Entreprise X",
+      "periode": "2023-2025",
+      "description": "Développement d'applications Angular, optimisation des performances, collaboration avec l'équipe design."
+    }
+  ],
+  "formations": [
+    {
+      "diplome": "Master Informatique",
+      "ecole": "Université Y",
+      "annee": "2018-2021"
+    }
+  ],
+  "competences": ["Angular", "TypeScript", "HTML", "CSS", "RxJS"],
+  "langues": ["Français", "Anglais"],
+  "technologies": ["Docker", "Git", "Jest"]
+}

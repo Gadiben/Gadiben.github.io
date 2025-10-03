@@ -1,0 +1,55 @@
+
+.cv-container {
+	font-family: Inter, Arial, sans-serif;
+	padding: 2rem;
+}
+.cv-header {
+	display: flex;
+	align-items: center;
+	gap: 2rem;
+	margin-bottom: 2rem;
+}
+.cv-photo img {
+	width: 120px;
+	height: 120px;
+	object-fit: cover;
+	border-radius: 50%;
+	border: 2px solid #7702FF;
+}
+.cv-contact {
+	flex: 1;
+}
+.cv-description {
+	margin-top: 1rem;
+	font-style: italic;
+}
+.cv-main {
+	display: flex;
+	gap: 2rem;
+}
+.cv-left, .cv-center, .cv-right {
+	flex: 1;
+	background: #f7f7fa;
+	padding: 1rem;
+	border-radius: 8px;
+}
+.cv-left {
+	max-width: 180px;
+}
+.cv-icon {
+	font-weight: bold;
+	margin-right: 0.5rem;
+}
+.cv-date {
+	color: #7702FF;
+	margin-right: 0.5rem;
+}
+.cv-label {
+	color: #333;
+}
+.cv-experience, .cv-formation {
+	margin-bottom: 1rem;
+}
+.cv-right ul {
+	padding-left: 1rem;
+}
