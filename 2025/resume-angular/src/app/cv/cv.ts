@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import * as data from '../../assets/cv-data.json';
 
 @Component({
   selector: 'app-cv',
@@ -14,7 +15,6 @@ export class Cv implements OnInit {
   cvData: any = null;
 
   async ngOnInit() {
-    const response = await fetch('/src/assets/cv-data.json');
-    this.cvData = await response.json();
+    this.cvData = data;
   }
 }

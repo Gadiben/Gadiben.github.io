@@ -1,5 +1,5 @@
 {
-  "photo": "assets/photo.jpg",
+  "photo": "photo.jpg",
   "contact": {
     "nom": "Votre Nom",
     "email": "email@example.com",
