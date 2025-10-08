@@ -11,16 +11,55 @@
     {
       "titre": "Software Engineer Tech Lead",
       "entreprise": "Median Technologies",
-      "periode": "2020-2025",
-      "description": "Développement d'applications Angular, optimisation des performances, collaboration avec l'équipe design.",
-      "challenges": "Performance, mise à l'échelle."
+      "periode": "2022-2025",
+      "description": "",
+      "challenges": "Performance, mise à l'échelle.",
+      "items": [
+        "Design et intégration dans l'écosystème applicatif.",
+        "Mise en place d'une pipeline robuste, transparente, facilement maintenable et évolutif.",
+        "Encadrement, montée en compétences d'une équipe de développeurs."
+      ]
+    },
+    {
+      "titre": "Software Engineer Developer",
+      "entreprise": "Median Technologies",
+      "periode": "2020-2021",
+      "description": "",
+      "challenges": "Modèle de donnée, Interface utilisateur, CI / CD",
+      "items": [
+        "Développement full-stack angular Dotnet",
+        "Création et déploiement sur un cluster Kubernetes",
+        "Analyse de données utilisateurs",
+        "Support d'utilisateurs"
+      ]
     }
   ],
   "formations": [
     {
-      "diplome": "Master Informatique",
-      "ecole": "Université Y",
-      "annee": "2018-2021"
+      "diplome": "Maîtrise professionnelle en génie Informatique (Bac+7)",
+      "ecole": "Polytechnique Montréal",
+      "annee": "2018-2020"
+    },
+    {
+      "diplome": "Diplôme d'ingénieur",
+      "ecole": "IMT Atlantique (ex Télécom Bretagne) & Eurécom (Sophia Antipolis)",
+      "annee": "2016-2020"
+    },
+    {
+      "diplome": "License 3 de Mathématiques",
+      "ecole": "Université Bretagne Occidentale",
+      "annee": "2016-2017",
+      "display": false
+    },
+    {
+      "diplome": "Classe préparatoire aux grandes écoles, filière MP*",
+      "ecole": "Lycée Faidherbe, Lille",
+      "annee": "2014-2016"
+    },
+    {
+      "diplome": "Baccalauréat Scientifique, mention Très Bien",
+      "ecole": "Lycée Francais Charles de Gaulle, Londres",
+      "annee": "2014"
     }
   ],
   "competences": ["Angular", "TypeScript", "HTML", "CSS", "RxJS"],

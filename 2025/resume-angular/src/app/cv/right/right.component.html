@@ -1,0 +1,14 @@
+<div class="cv-right">
+  <h3>Compétences</h3>
+  <ul>
+    <li *ngFor="let comp of cvData.competences">{{ comp }}</li>
+  </ul>
+  <h3>Langues</h3>
+  <ul>
+    <li *ngFor="let lang of cvData.langues">{{ lang }}</li>
+  </ul>
+  <h3>Technologies</h3>
+  <ul>
+    <li *ngFor="let tech of cvData.technologies">{{ tech }}</li>
+  </ul>
+</div>

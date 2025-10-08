@@ -1,34 +1,19 @@
-
 .cv-container {
 	font-family: Tahoma, sans-serif;
-	padding: 2rem;
-	background-color: #f7f7fa;
+	padding: 1rem;
+	background-color: var(--color-bg);
 	width: 21cm;
   	height: 29.7cm;
-
+	border: var(--color-accent) solid 1px;
 }
 .cv-header {
 	display: flex;
 	align-items: center;
 	gap: 2rem;
 	margin-bottom: 1rem;
-	background: #7fb5e8;
+	background: var(--color-primary);
 	border-radius: 0 8px;
 	padding: 1.5rem 1rem;
-}
-.cv-photo img {
-	width: 120px;
-	height: 120px;
-	object-fit: cover;
-	border-radius: 10%;
-	border: solid #3578b7 3px;
-}
-.cv-contact {
-	flex: 1;
-}
-.cv-description {
-	margin-top: 1rem;
-	font-style: italic;
 }
 .cv-main {
 	display: flex;
@@ -38,28 +23,12 @@
 	padding: 1rem;
 	border-radius: 0 8px;
 }
+
 .cv-center {
-	flex: 3;
-	background-color: #e8ecf2;
+	flex: 4;
+	background: var(--color-secondary);
 }
 .cv-right {
 	flex: 1;
-	background: #7fb5e8;
-}
-.cv-icon {
-	font-weight: bold;
-	margin-right: 0.5rem;
-}
-.cv-date {
-	color: #7702FF;
-	margin-right: 0.5rem;
-}
-.cv-label {
-	color: #333;
-}
-.cv-experience, .cv-formation {
-	margin-bottom: 1rem;
-}
-.cv-right ul {
-	padding-left: 1rem;
+	background: var(--color-primary);
 }

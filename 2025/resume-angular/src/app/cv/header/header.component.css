@@ -1,0 +1,20 @@
+.cv-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background: var(--color-header);
+}
+.cv-photo img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--color-accent);
+}
+.cv-contact {
+    flex: 1;
+}
+.cv-description {
+    margin-top: 1rem;
+    font-style: italic;
+}

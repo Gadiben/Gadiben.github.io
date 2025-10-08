@@ -1,0 +1,12 @@
+<section class="cv-header">
+  <div class="cv-photo">
+    <img [src]="cvData.photo" alt="Photo" />
+  </div>
+  <div class="cv-contact">
+    <h2>{{ cvData.contact.nom }}</h2>
+    <p>Email : {{ cvData.contact.email }}</p>
+    <p>Téléphone : {{ cvData.contact.telephone }}</p>
+    <p>LinkedIn : <a [href]="cvData.contact.linkedin" target="_blank">{{ cvData.contact.linkedin }}</a></p>
+    <p class="cv-description">{{ cvData.description }}</p>
+  </div>
+</section>

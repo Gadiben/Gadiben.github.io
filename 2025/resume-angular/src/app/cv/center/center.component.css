@@ -1,0 +1,7 @@
+.cv-experience, .cv-formation {
+    margin-bottom: 1rem;
+}
+.cv-challenges {
+    font-weight: bold;
+    color: var(--color-accent);
+}

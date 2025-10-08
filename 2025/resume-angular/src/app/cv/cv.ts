@@ -1,6 +1,10 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FilterDisplayPipe } from './filter-display.pipe';
+import { CvHeaderComponent } from './header/header.component';
+import { CvCenterComponent } from './center/center.component';
+import { CvRightComponent } from './right/right.component';
 import { ActivatedRoute } from '@angular/router';
 import * as cv_fr from '../../assets/cv-data.fr.json';
 import * as cv_en from '../../assets/cv-data.en.json';
@@ -8,7 +12,7 @@ import * as cv_en from '../../assets/cv-data.en.json';
 @Component({
   selector: 'app-cv',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FilterDisplayPipe, CvHeaderComponent, CvCenterComponent, CvRightComponent],
   templateUrl: './cv.html',
   styleUrl: './cv.css'
 })

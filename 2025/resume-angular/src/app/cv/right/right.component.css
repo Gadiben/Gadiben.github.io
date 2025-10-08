@@ -1,0 +1,9 @@
+.cv-right {
+    flex: 1;
+    background: var(--color-right);
+    padding: 1rem;
+    border-radius: 8px;
+}
+.cv-right ul {
+    padding-left: 1rem;
+}
