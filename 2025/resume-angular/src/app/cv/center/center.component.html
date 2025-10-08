@@ -1,5 +1,5 @@
-<h3>Expériences</h3>
-<div *ngFor="let exp of cvData.experiences" class="cv-experience">
+<h3>{{ cvData.experiences.label }}</h3>
+<div *ngFor="let exp of cvData.experiences.items" class="cv-experience">
   <strong>{{ exp.titre }}</strong> - {{ exp.entreprise }}<br />
   <span>{{ exp.periode }}</span>
   <p><span class="cv-challenges">Challenges</span>: {{ exp.challenges }}</p>
@@ -8,8 +8,8 @@
     <li *ngFor="let item of exp.items">{{ item }}</li>
   </ul>
 </div>
-<h3>Formations</h3>
-<div *ngFor="let form of cvData.formations | filterDisplay" class="cv-formation">
+<h3>{{ cvData.formations.label }}</h3>
+<div *ngFor="let form of cvData.formations.items | filterDisplay" class="cv-formation">
   <strong>{{ form.diplome }}</strong> - {{ form.ecole }}<br />
   <span>{{ form.annee }}</span>
 </div>

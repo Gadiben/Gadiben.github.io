@@ -1,14 +1,14 @@
 <div class="cv-right">
-  <h3>Compétences</h3>
+  <h3>{{ cvData.skills.label }}</h3>
   <ul>
-    <li *ngFor="let comp of cvData.competences">{{ comp }}</li>
+    <li *ngFor="let skill of cvData.skills.items">{{ skill }}</li>
   </ul>
-  <h3>Langues</h3>
+  <h3>{{ cvData.languages.label }}</h3>
   <ul>
-    <li *ngFor="let lang of cvData.langues">{{ lang }}</li>
+    <li *ngFor="let lang of cvData.languages.items">{{ lang }}</li>
   </ul>
-  <h3>Technologies</h3>
+  <h3>{{ cvData.technologies.label }}</h3>
   <ul>
-    <li *ngFor="let tech of cvData.technologies">{{ tech }}</li>
+    <li *ngFor="let tech of cvData.technologies.items">{{ tech }}</li>
   </ul>
 </div>
