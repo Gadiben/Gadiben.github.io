@@ -1,7 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FilterDisplayPipe } from './filter-display.pipe';
 import { CvHeaderComponent } from './header/header.component';
 import { CvCenterComponent } from './center/center.component';
 import { CvRightComponent } from './right/right.component';
@@ -12,7 +11,7 @@ import * as cv_en from '../../assets/cv-data.en.json';
 @Component({
   selector: 'app-cv',
   standalone: true,
-  imports: [CommonModule, FilterDisplayPipe, CvHeaderComponent, CvCenterComponent, CvRightComponent],
+  imports: [CommonModule, CvHeaderComponent, CvCenterComponent, CvRightComponent],
   templateUrl: './cv.html',
   styleUrl: './cv.css'
 })
