@@ -8,7 +8,6 @@ export const CV_DATA_FR = {
     linkedin: 'https://linkedin.com/in/gautier-dervaux'
   },
   poste: "Software Engineer Tech Lead",
-
   description:
     'Tourné vers le fonctionel et la coopération,\n je suis à la recherche d\'un projet captivant dans une équipe dynamique.',
   experiences: {
@@ -19,7 +18,7 @@ export const CV_DATA_FR = {
         entreprise: 'Median Technologies',
         periode: 'Depuis 2021 (4 ans)',
         description: '',
-        challenges: 'Intégration, Performance, mise à l\'échelle',
+        challenges: 'Intégration, Performance, Observabilité',
         items: [
           "Design et intégration dans l'écosystème applicatif.",
           "Recherche et implémentation d'une pipeline d'import robuste, transparente, facilement maintenable et évolutive.",
@@ -83,6 +82,7 @@ export const CV_DATA_FR = {
         'Microsoft Dotnet',
         'Asp.NET - Entity Framework',
         'Angular - Jest, RxJs',
+        'Argo Workflow',
         'SQL',
         'Python'
       ],

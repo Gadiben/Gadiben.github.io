@@ -19,5 +19,5 @@
 <h3><i class="{{ cvData.formations.icone }}"></i> {{ cvData.formations.label }}</h3>
 <div *ngFor="let form of cvData.formations.items | filterDisplay" class="cv-formation">
   <strong>{{ form.diplome }}</strong>
-  <div class="school">{{ form.ecole }} - <span>{{ form.annee }}</span></div> 
+  <div class="school">{{ form.ecole }}<br><span>{{ form.annee }}</span></div> 
 </div>

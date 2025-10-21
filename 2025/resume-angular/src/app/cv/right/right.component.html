@@ -1,9 +1,9 @@
 <div class="cv-right">
   <div class="sub-section" *ngFor="let section of cvData.bullet_section">
-    <h3>
+    <h4>
       <i class={{section.icone}}></i>
       {{ section.label }}
-    </h3>
+    </h4>
     <ul>
       <li *ngFor="let item of section.items">{{ item }}</li>
     </ul>
