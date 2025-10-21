@@ -1,0 +1,29 @@
+.cv-experience,
+.cv-formation {
+  margin-bottom: 1rem;
+  .school {
+    color: var(--color-subtitle);
+    font-style: italic;
+    font-size: 11pt;
+  }
+}
+.cv-experiences-container {
+  border-bottom: 1px solid var(--color-accent);
+  padding-bottom: 1rem;
+  .cv-experience {
+    .cv-title {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: var(--color-accent);
+    }
+    .cv-company {
+      font-style: italic;
+    }
+    .cv-challenges-title {
+      text-decoration: underline;
+    }
+    .cv-challenges {
+      font-weight: bold;
+    }
+  }
+}

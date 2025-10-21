@@ -1,0 +1,9 @@
+<div *ngIf="cvData" class="cv-container">
+	<section class="cv-header">
+		<cv-header [cvData]="cvData"></cv-header>
+	</section>
+	<section class="cv-main">
+		<cv-center [cvData]="cvData" class="cv-center"></cv-center>
+		<cv-right [cvData]="cvData" class="cv-right"></cv-right>
+	</section>
+</div>

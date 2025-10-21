@@ -1,0 +1,49 @@
+:host {
+  width: 100%;
+}
+.cv-header {
+  background: var(--color-header);
+  padding: 1rem 0;
+  .cv-header-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    .cv-photo {
+      width: 120px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 10%;
+    }
+    .cv-header-main {
+      width: 100%;
+      .cv-header-info {
+        display: flex;
+        flex-direction: row;
+        h2 {
+          align-self: flex-end;
+          margin-bottom: 0;
+        }
+        .cv-contact {
+          flex: 2;
+          align-self: center;
+          text-align: right;
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+          font-size: 10pt;
+          p {
+            margin: 0;
+          }
+          i {
+            margin-left: 0.5rem;
+          }
+        }
+      }
+      .cv-description {
+        font-style: italic;
+        text-align: justify;
+        white-space: pre-line;
+      }
+    }
+  }
+}

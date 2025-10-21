@@ -1,0 +1,78 @@
+{
+  "photo": "photo.jpg",
+  "contact": {
+    "label": "Contact",
+    "nom": "DERVAUX Gautier",
+    "email": "gautier_dervaux@hotmail.com",
+    "telephone": "+33 7 49 01 40 92",
+    "linkedin": "https://linkedin.com/in/gautier-dervaux"
+  },
+  "description": "Value driven and team player, I am looking for an exciting project in a dynamic team.",
+  "experiences": {
+    "label": "Experiences",
+    "items": [
+      {
+        "titre": "Software Engineer Tech Lead",
+        "entreprise": "Median Technologies",
+        "periode": "2022-2025",
+        "description": "",
+        "challenges": "Performance, mise à l'échelle.",
+        "items": [
+          "Design et intégration dans l'écosystème applicatif.",
+          "Mise en place d'une pipeline robuste, transparente, facilement maintenable et évolutif.",
+          "Encadrement, montée en compétences d'une équipe de développeurs."
+        ]
+      },
+      {
+        "titre": "Software Engineer Developer",
+        "entreprise": "Median Technologies",
+        "periode": "2020-2021",
+        "description": "",
+        "challenges": "Modèle de donnée, Interface utilisateur, CI / CD",
+        "items": [
+          "Développement full-stack angular Dotnet",
+          "Création et déploiement sur un cluster Kubernetes",
+          "Analyse de données utilisateurs",
+          "Support d'utilisateurs"
+        ]
+      }
+    ]
+  },
+  "formations": {
+    "label": "Curriculum",
+    "items": [
+      {
+        "diplome": "Maîtrise professionnelle en génie Informatique (Bac+7)",
+        "ecole": "Polytechnique Montréal",
+        "annee": "2018-2020"
+      },
+      {
+        "diplome": "Diplôme d'ingénieur",
+        "ecole": "IMT Atlantique (ex Télécom Bretagne) & Eurécom (Sophia Antipolis)",
+        "annee": "2016-2020"
+      },
+      {
+        "diplome": "License 3 de Mathématiques",
+        "ecole": "Université Bretagne Occidentale",
+        "annee": "2016-2017",
+        "display": false
+      },
+      {
+        "diplome": "Classe préparatoire aux grandes écoles, filière MP*",
+        "ecole": "Lycée Faidherbe, Lille",
+        "annee": "2014-2016"
+      },
+      {
+        "diplome": "Baccalauréat Scientifique, mention Très Bien",
+        "ecole": "Lycée Francais Charles de Gaulle, Londres",
+        "annee": "2014"
+      }
+    ]
+  },
+  "skills": {
+    "label": "Skills",
+    "items": ["Angular", "TypeScript", "HTML", "CSS", "RxJS"]
+  },
+  "languages": { "label": "Languages", "items": ["French", "English", "German"] },
+  "technologies": { "label": "Technologies", "items": ["Docker", "Git", "Jest"] }
+}

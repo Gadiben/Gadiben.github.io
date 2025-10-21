@@ -1,0 +1,10 @@
+.cv-right {
+    background: var(--color-right);
+    border-radius: 8px;
+}
+.cv-right ul {
+    padding-left: 1rem;
+}
+.sub-section:not(:last-child) {
+    border-bottom: 1px solid var(--color-accent);
+}

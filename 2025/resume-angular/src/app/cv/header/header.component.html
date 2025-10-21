@@ -1,0 +1,21 @@
+<section class="cv-header">
+  <div class="cv-header-content">
+    <img [src]="cvData.photo" alt="Photo" class="cv-photo" />
+    <div class="cv-header-main">
+      <div class="cv-header-info">
+        <div>
+          <h2>{{ cvData.contact.nom }}</h2>
+          <h3>{{ cvData.poste }}</h3>
+        </div>
+        <div class="cv-contact">
+          <p>{{ cvData.contact.email }}<i class="fas fa-envelope"></i></p>
+          <p>{{ cvData.contact.telephone }}<i class="fas fa-phone"></i></p>
+          <p><a [href]="cvData.contact.linkedin" target="_blank">{{ cvData.contact.linkedin }}</a><i class="fab fa-linkedin"></i></p>
+        </div>
+      </div>
+      <div >
+        <div class="cv-description">{{ cvData.description }}</div>
+      </div>
+    </div>
+  </div>
+</section>
