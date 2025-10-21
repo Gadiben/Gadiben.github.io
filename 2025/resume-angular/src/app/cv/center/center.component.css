@@ -1,5 +1,10 @@
 .cv-experience, .cv-formation {
     margin-bottom: 1rem;
+    .school{
+        color: var(--color-subtitle);
+        font-style: italic;
+        font-size: 10pt
+    }
 }
 .cv-challenges {
     font-weight: bold;

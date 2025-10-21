@@ -11,9 +11,6 @@
     border-radius: 50%;
     border: 2px solid var(--color-accent);
 }
-.cv-contact {
-    flex: 1;
-}
 .cv-description {
     margin-top: 1rem;
     font-style: italic;
