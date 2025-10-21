@@ -1,38 +1,38 @@
 .cv-container {
-	font-family: Tahoma, sans-serif;
-	padding: 1rem;
-	background-color: var(--color-bg);
-	width: 21cm;
-  	height: 29.7cm;
-	border: var(--color-accent) solid 1px;
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
-	overflow: hidden;
+  padding: 1rem;
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  overflow: hidden;
+  width: 21cm;
+  height: 29.7cm;
+  border: var(--color-accent) solid 1px;
 }
 .cv-header {
-	flex: 1;
-	display: flex;
-	align-items: center;
-	background: var(--color-primary);
-	border-radius: 0 8px;
-	padding: 0 1rem;
+  flex: 1;
+  display: flex;
+  background: var(--color-primary);
+  border-radius: 0 8px;
+  padding: 0 1.5rem;
 }
 .cv-main {
-	flex: 5;
-	display: flex;
-	gap: 1rem;
+  flex: 5;
+  display: flex;
+  gap: 1rem;
 }
-.cv-center, .cv-right {
-	padding: 1rem;
-	border-radius: 0 8px;
+.cv-center,
+.cv-right {
+  padding: 0 1rem;
+  border-radius: 0 8px;
 }
 
 .cv-center {
-	flex: 4;
-	background: var(--color-secondary);
+  flex: 4;
+  background: var(--color-secondary);
 }
 .cv-right {
-	flex: 1.5;
-	background: var(--color-primary);
+  flex: 1.5;
+  background: var(--color-primary);
 }

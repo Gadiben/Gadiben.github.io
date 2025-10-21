@@ -1,14 +1,22 @@
-<h3>{{ cvData.experiences.label }}</h3>
+<h3><i class="{{ cvData.experiences.icone }}"></i> {{ cvData.experiences.label }}</h3>
+<div class="cv-experiences-container">
+
 <div *ngFor="let exp of cvData.experiences.items" class="cv-experience">
-  <strong>{{ exp.titre }}</strong> - {{ exp.entreprise }}<br />
-  <span>{{ exp.periode }}</span>
-  <p><span class="cv-challenges">Challenges</span>: {{ exp.challenges }}</p>
+  <div class="cv-title">{{ exp.titre }}</div>
+  <div class="cv-company">
+    {{ exp.entreprise }} {{ exp.periode }}
+  </div>
+  <p>
+    <span class="cv-challenges-title">Challenges</span> : 
+    <span class="cv-challenges">{{ exp.challenges }}</span>
+  </p>
   <p>{{ exp.description }}</p>
   <ul>
     <li *ngFor="let item of exp.items">{{ item }}</li>
   </ul>
 </div>
-<h3>{{ cvData.formations.label }}</h3>
+</div>
+<h3><i class="{{ cvData.formations.icone }}"></i> {{ cvData.formations.label }}</h3>
 <div *ngFor="let form of cvData.formations.items | filterDisplay" class="cv-formation">
   <strong>{{ form.diplome }}</strong>
   <div class="school">{{ form.ecole }} - <span>{{ form.annee }}</span></div> 

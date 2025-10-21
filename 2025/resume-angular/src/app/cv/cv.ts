@@ -5,7 +5,7 @@ import { CvHeaderComponent } from './header/header.component';
 import { CvCenterComponent } from './center/center.component';
 import { CvRightComponent } from './right/right.component';
 import { ActivatedRoute } from '@angular/router';
-import * as cv_fr from '../../assets/cv-data.fr.json';
+import { CV_DATA_FR } from './data/cv-data.fr';
 import * as cv_en from '../../assets/cv-data.en.json';
 
 @Component({
@@ -22,6 +22,6 @@ export class Cv implements OnInit {
 
   async ngOnInit() {
     let lang = this.route.snapshot.data['lang'] || 'fr';
-    this.cvData = lang === 'en' ? cv_en : cv_fr;
+  this.cvData = lang === 'en' ? cv_en : CV_DATA_FR;
   }
 }
